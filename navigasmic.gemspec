@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "lib/builders/html_builder.rb",
      "lib/builders/xml_builder.rb",
      "lib/navigasmic.rb",
+     "navigasmic.gemspec",
      "test/navigasmic_test.rb",
      "test/test_helper.rb"
   ]
