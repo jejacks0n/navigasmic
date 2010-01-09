@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "navigasmic"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Semantic navigation for Rails}
+    gem.description = %Q{Semantic navigation; a semantic way to build beautifully simple navigation structures in Rails.}
     gem.email = "jejacks0n@gmail.com"
     gem.homepage = "http://github.com/jejacks0n/navigasmic"
     gem.authors = ["Jeremy Jackson"]

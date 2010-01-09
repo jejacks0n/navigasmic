@@ -1,0 +1,198 @@
+h1. Navigasmic
+
+Semantic navigation; a semantic way to build beautifully simple navigation structures in Rails.
+
+h2. The Story
+
+Most of the navigation styles I've done over the years pretty much boil down to this idea: Use simple markup, and do the rest with css (and javascript if you need it).  So, yeah, the default markup is beautifully simple (UL and LI tags).
+
+I wanted something that allowed for customization and ended up deciding that Rails forms outline that nicely.  With some ideas taken from formtastic, I setup navigasmic to work a lot like how Rails forms work, in that it uses builders.  For example, there are two builders that are provided (HTML for ERB, HAML, etc. and XML for ERB, Builder, etc), and these builders can be extended or replaced if you need more custom markup.
+
+Currently the HTML builder generates UL and LI tags, which helps with SEO, and the XML builder generates tags that can be used for XML site maps.
+
+h2. Installation
+
+The gem is hosted on gemcutter, so *if you haven't already*, add it as a gem source:
+
+<pre>
+  sudo gem sources -a http://gemcutter.org/
+</pre>
+
+Then install the navigasmic gem:
+
+<pre>
+  sudo gem install navigasmic
+</pre>
+
+h2. Usage
+
+h3. HAML
+  
+*Simple Usage*
+
+<pre>
+  - semantic_navigation :main do |n|
+    = n.group 'Media', :html => {:class => 'media'} do
+      = n.item 'Image Gallery', :link => {:controller => 'media/images'}
+      = n.item 'Videos', :link => {:controller => 'media/videos'}
+    = n.group 'Info' do
+      = n.item 'About Us', :link => '/about_us', :html => {:title => 'we are the coolest'}
+      = n.item 'Nothing Here'
+
+  ...produces...
+
+  <ul id="main" class="semantic-navigation">
+    <li class="media with-group">
+      <span>Media<span>
+      <ul>
+        <li id="image_gallery"><a href="/media/images"><span>Image Gallery</span></a></li>
+        <li id="videos"><a href="/media/videos"><span>Videos</span></a></li>
+      </ul>
+    </li>
+    <li class="with-group">
+      <span>Info<span>
+      <ul>
+        <li id="about_us" title="we are the coolest"><a href="/about_us/"><span>About Us</span></a></li>
+        <li id="videos"><span>Nothing Here</span></li>
+      </ul>
+    </li>
+  </ul>
+</pre>
+
+*Nesting of items and additional markup*
+
+<pre>
+  - semantic_navigation :main, :html => { :class => 'primary' } do |n|
+    = n.group 'Media' do
+      = n.item 'Image Gallery', :link => {:controller => 'media/images', :action => 'index'}
+      = n.item 'Videos', :link => {:controller => 'media/videos'}
+    .secondary
+      = n.group 'Info' do
+        = n.item 'About Us', :link => '/about_us' do
+          %ul
+            = n.item 'Nothing Here'
+
+  ...produces...
+
+  <ul id="main" class="primary semantic-navigation">
+    <li id="media" class="with-group">
+      <span>Media</span>
+      <ul>
+        <li id="image_gallery"><a href="/media/images"><span>Image Gallery</span></a></li>
+        <li id="videos"><a href="/media/videos"><span>Videos</span></a></li>
+      </ul>
+    </li>
+    <div class="secondary">
+      <li id="info" class="with-group">
+        <span>Info</span>
+        <ul>
+          <li id="about_us">
+            <a href="/about_us"><span>About Us</span></a>
+            <ul>
+              <li id="nothing_here"><span>Nothing Here</span></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </div>
+  </ul>
+</pre>
+
+*Highlighting* -- highlights on the media controller (or any that inherit from it), on the /images path, and on mondays
+
+<pre>
+  - semantic_navigation :main do
+    = n.item 'Image Gallery',
+            :link => 'media/images'
+            :highlights_on => [{:controller => 'media'}, '/images', proc { Time.now.wday == 1 }]
+</pre>
+
+*Disabling* -- disabled on tuesdays, and when not logged in
+
+<pre>
+  - semantic_navigation :main do
+    = n.item 'Image Gallery', :link => 'media/images'
+            :disabled_if => proc { Time.now.wday == 2 || !logged_in? }
+<pre>
+
+h3. ERB
+
+*Nesting of items and additional markup*
+
+<pre>
+  <% semantic_navigation :main, :html => { :class => 'primary' } do |n| %>
+    <%= n.group 'Media' do %>
+      <%= n.item 'Image Gallery', :link => {:controller => 'media/images', :action => 'index'} %>
+      <%= n.item 'Videos', :link => {:controller => 'media/videos'} %>
+    <% end %>
+    <div class="secondary">
+      <%= n.group 'Info' do %>
+        <%= n.item 'About Us', :link => '/about_us' do %>
+          <ul><%= n.item 'Nothing Here' %></ul>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  ...produces...
+
+  <ul id="main" class="primary semantic-navigation">
+    <li id="media" class="with-group">
+      <span>Media</span>
+      <ul>
+        <li id="image_gallery"><a href="/media/images"><span>Image Gallery</span></a></li>
+        <li id="videos"><a href="/media/videos"><span>Videos</span></a></li>
+      </ul>
+    </li>
+    <div class="secondary">
+      <li id="info" class="with-group">
+        <span>Info</span>
+        <ul>
+          <li id="about_us">
+            <a href="/about_us"><span>About Us</span></a>
+            <ul>
+              <li id="nothing_here"><span>Nothing Here</span></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </div>
+  </ul>  
+</pre>
+
+h3. XML
+
+<pre>
+- semantic_navigation :main, :builder => Navigasmic::XmlNavigationBuilder do
+  = n.group 'Media', :html => {:class => 'media'} do
+    = n.item 'Image Gallery', :link => {:controller => 'media/images'}
+    = n.item 'Videos', :link => {:controller => 'media/videos'}
+  = n.group 'Info' do
+    = n.item 'About Us', :link => '/about_us', :html => {:title => 'we are the coolest'}
+    = n.item 'Nothing Here'
+</pre>
+
+h3. Other
+
+You can always create your own builder by extending one of the existing ones, or creating one from scratch.
+
+Then just specify your builder, or do it as a configuration.
+
+@semantic_navigation :main, :builder => MyCustomBuilder do@
+
+@Navigasmic::SemanticNavigationHelper.builder = MyCustomBuilder@
+
+h2. Documentation
+
+RDoc documentation _should_ be automatically generated after each commit and made available on the "rdoc.info website":http://rdoc.info/projects/jejacks0n/navigasmic.
+
+h2. Compatibility
+
+I'm only testing with the latest Rails 2.4.x stable release, and it should work under Rails 2.3.x as well.  Feel free to add backwards compatibility if you need it.
+
+h2. Project Info
+
+Navigasmic is hosted on Github: "http://github.com/jejacks0n/navigasmic":http://github.com/jejacks0n/navigasmic, and the gem is available on Gemcutter: "http://gemcutter.org/navigasmic":http://gemcutter.org/navigasmic
+
+
+Copyright (c) Jeremy Jackson, released under the MIT license.
