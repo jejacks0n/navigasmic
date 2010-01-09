@@ -38,9 +38,9 @@ h3. HAML
     = n.group 'Info' do
       = n.item 'About Us', :link => '/about_us', :html => {:title => 'we are the coolest'}
       = n.item 'Nothing Here'
-
+</pre>
   ...produces...
-
+<pre>
   <ul id="main" class="semantic-navigation">
     <li class="media with-group">
       <span>Media<span>
@@ -71,9 +71,9 @@ h3. HAML
         = n.item 'About Us', :link => '/about_us' do
           %ul
             = n.item 'Nothing Here'
-
+</pre>
   ...produces...
-
+<pre>
   <ul id="main" class="primary semantic-navigation">
     <li id="media" class="with-group">
       <span>Media</span>
@@ -102,9 +102,14 @@ h3. HAML
 
 <pre>
   - semantic_navigation :main do
-    = n.item 'Image Gallery',
-            :link => 'media/images'
+    = n.item 'Image Gallery', :link => 'media/images'
             :highlights_on => [{:controller => 'media'}, '/images', proc { Time.now.wday == 1 }]
+</pre>
+  ...produces
+<pre>
+  <ul id="main" class="semantic-navigation">
+    <li id="image_gallery" class="highlighted"><a href="/media/images"><span>Image Gallery</span></a></li>
+  </ul>
 </pre>
 
 *Disabling* -- disabled on tuesdays, and when not logged in
@@ -113,7 +118,13 @@ h3. HAML
   - semantic_navigation :main do
     = n.item 'Image Gallery', :link => 'media/images'
             :disabled_if => proc { Time.now.wday == 2 || !logged_in? }
+</pre>
+  ...produces
 <pre>
+  <ul id="main" class="semantic-navigation">
+    <li id="image_gallery" class="disabled"><span>Image Gallery</span></li>
+  </ul>
+</pre>
 
 h3. ERB
 
@@ -133,9 +144,9 @@ h3. ERB
       <% end %>
     </div>
   <% end %>
-
+</pre>
   ...produces...
-
+<pre>
   <ul id="main" class="primary semantic-navigation">
     <li id="media" class="with-group">
       <span>Media</span>
@@ -163,13 +174,7 @@ h3. ERB
 h3. XML
 
 <pre>
-- semantic_navigation :main, :builder => Navigasmic::XmlNavigationBuilder do
-  = n.group 'Media', :html => {:class => 'media'} do
-    = n.item 'Image Gallery', :link => {:controller => 'media/images'}
-    = n.item 'Videos', :link => {:controller => 'media/videos'}
-  = n.group 'Info' do
-    = n.item 'About Us', :link => '/about_us', :html => {:title => 'we are the coolest'}
-    = n.item 'Nothing Here'
+...Still working on the xml builder...
 </pre>
 
 h3. Other
