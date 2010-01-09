@@ -6,6 +6,10 @@ module Navigasmic
       :disabled => 'disabled',
       :highlighted => 'highlighted'
     }
+    @@wrapper_tag = :ul
+    @@group_tag = :ul
+    @@item_tag = :li
+    @@label_tag = :span
 
     attr_accessor :template, :name, :items
 
@@ -16,7 +20,7 @@ module Navigasmic
 
     def render(options, &proc)
       buffer = template.capture(self, &proc)
-      template.concat(template.content_tag(:ul, buffer, options))
+      template.concat(template.content_tag(@@wrapper_tag, buffer, options))
     end
 
     def group(label = nil, options = {}, &proc)
@@ -27,10 +31,10 @@ module Navigasmic
       options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore
 
       buffer = template.capture(self, &proc)
-      group = template.content_tag(:ul, buffer)
+      group = template.content_tag(@@group_tag, buffer)
       label = label_for_group(label) unless label.blank?
 
-      template.content_tag(:li, label.to_s + group, options.delete(:html))
+      template.content_tag(@@item_tag, label.to_s + group, options.delete(:html))
     end
 
     def item(label, options = {}, &proc)
@@ -47,15 +51,15 @@ module Navigasmic
       label = label_for_item(label)
       label = template.link_to(label, item.link) unless item.link.empty?
 
-      template.content_tag(:li, label + buffer, options.delete(:html))
+      template.content_tag(@@item_tag, label + buffer, options.delete(:html))
     end
 
     def label_for_group(label)
-      template.content_tag(:span, label.to_s)
+      template.content_tag(@@label_tag, label.to_s)
     end
 
     def label_for_item(label)
-      template.content_tag(:span, label.to_s)
+      template.content_tag(@@label_tag, label.to_s)
     end
 
   end
