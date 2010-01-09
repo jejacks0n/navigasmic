@@ -6,7 +6,29 @@ h2. The Story
 
 Most of the navigation styles I've done over the years pretty much boil down to this idea: Use simple markup, and do the rest with css (and javascript if you need it).  So, yeah, the default markup is beautifully simple (UL and LI tags).
 
-I wanted something that allowed for customization and ended up deciding that Rails forms outline that nicely.  With some ideas taken from formtastic, I setup navigasmic to work a lot like how Rails forms work, in that it uses builders.  For example, there are two builders that are provided (HTML for ERB, HAML, etc. and XML for ERB, Builder, etc), and these builders can be extended or replaced if you need more custom markup.
+Ok, so navigation is easy right?  Until you start managing active/highlighted, disabled states, and more if you may need them.  This can quickly become a mess, and all too often it just stays in the views with whatever logic tossed on top of it as people go.  I've seen it too many times, and I wanted to do something about it.
+
+I went in with these requirements:
+
+* Should be simple
+* Should be easily customizable
+* Should handle active/highlighted states
+* Should handle disabled states
+* Should be pleasant to use
+* Should use less code to create than it generates
+
+And then I wrote a DSL that met those requirements:
+
+<pre>
+  <% semantic_navigation :main do |n| %>
+    <%= n.group 'Media' do %>
+      <%= n.item 'Image Gallery', :link => '/media/images', :highlights_on => '/media/videos' %>
+      <%= n.item 'Videos', :link => '/media/videos', :disabled_if => proc { true } %>
+    <% end %>
+  <% end %>
+</pre>
+
+Since I clearly needed something that allowed for customization I ended up emulating the way Rails uses form builders.  With some ideas taken from formtastic, I setup navigasmic to use builders.  There are two builders that are provided (HTML for ERB, HAML, etc. and XML for ERB, Builder, etc), and these builders can be extended or replaced if you need more custom markup.
 
 Currently the HTML builder generates UL and LI tags, which helps with SEO, and the XML builder generates tags that can be used for XML site maps.
 
