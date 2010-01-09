@@ -122,3 +122,5 @@ module Navigasmic #:nodoc:
   end
 
 end
+
+ActionController::Base.helper Navigasmic::SemanticNavigationHelper
