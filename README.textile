@@ -197,7 +197,7 @@ I'm only testing with the latest Rails 2.4.x stable release, and it should work 
 
 h2. Project Info
 
-Navigasmic is hosted on Github: "http://github.com/jejacks0n/navigasmic":http://github.com/jejacks0n/navigasmic, and the gem is available on Gemcutter: "http://gemcutter.org/navigasmic":http://gemcutter.org/navigasmic
+Navigasmic is hosted on Github: "http://github.com/jejacks0n/navigasmic":http://github.com/jejacks0n/navigasmic, and the gem is available on Gemcutter: "http://gemcutter.org/gems/navigasmic":http://gemcutter.org/gems/navigasmic
 
 
 Copyright (c) Jeremy Jackson, released under the MIT license.
