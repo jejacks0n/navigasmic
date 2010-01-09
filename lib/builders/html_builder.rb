@@ -3,7 +3,6 @@ module Navigasmic
 
     @@classnames = {
       :with_group => 'with-group',
-      :group => 'group',
       :disabled => 'disabled',
       :highlighted => 'highlighted'
     }
