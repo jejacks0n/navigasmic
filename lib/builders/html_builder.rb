@@ -14,7 +14,7 @@ module Navigasmic
     attr_accessor :template, :name, :items
 
     def initialize(template, name, options = {}, &proc)
-      @template, @name, @items = template, name.to_s, options, []
+      @template, @name, @items = template, name.to_s, []
       render(options.delete(:html), &proc)
     end
 
@@ -40,7 +40,7 @@ module Navigasmic
     def item(label, options = {}, &proc)
       buffer = block_given? ? template.capture(self, &proc) : ''
 
-      item = NavigationItem.new(label, options)
+      item = NavigationItem.new(label, options, template)
 
       options[:html] ||= {}
       options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore

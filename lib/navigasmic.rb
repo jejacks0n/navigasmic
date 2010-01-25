@@ -36,7 +36,7 @@ module Navigasmic #:nodoc:
       raise ArgumentError, "Missing block" unless block_given?
 
       options = args.extract_options!
-      
+
       options[:html] ||= {}
       options[:html][:class] = add_class(options[:html][:class], 'semantic-navigation')
       options[:html][:id] ||= name.to_s.underscore
@@ -51,7 +51,7 @@ module Navigasmic #:nodoc:
     end
 
   end
-  
+
   #
   #
   #
@@ -61,9 +61,16 @@ module Navigasmic #:nodoc:
 
     attr_accessor :label, :link
 
-    def initialize(label, options = {})
+    def initialize(label, options = {}, template = nil)
       @label = label
-      @link = options[:link] || {}
+
+      if options[:link]
+        @link = options[:link]
+      elsif template.present?
+        method = "#{label.to_s.underscore.gsub(/\s/, '_')}_path"
+        @link = template.send(method) if template.respond_to? method
+      end
+      @link ||= {}
 
       @disabled_conditions = options[:disabled_if] || proc { false }
 

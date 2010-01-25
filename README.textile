@@ -24,6 +24,7 @@ And then I wrote a DSL that met those requirements:
     <%= n.group 'Media' do %>
       <%= n.item 'Image Gallery', :link => '/media/images', :highlights_on => '/media/videos' %>
       <%= n.item 'Videos', :link => '/media/videos', :disabled_if => proc { true } %>
+      <%= n.item 'Contact Us' # auto links to the contact_us_path if it exists %>
     <% end %>
   <% end %>
 </pre>
