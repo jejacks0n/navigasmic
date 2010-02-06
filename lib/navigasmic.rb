@@ -74,8 +74,8 @@ module Navigasmic #:nodoc:
 
       @disabled_conditions = options[:disabled_if] || proc { false }
 
-      options[:highlights] = [options[:highlights]] if options[:highlights].kind_of?(Hash)
-      @highlights_on = options[:highlights] || []
+      options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash)
+      @highlights_on = options[:highlights_on] || []
       @highlights_on << @link if link?
     end
 
