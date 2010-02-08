@@ -1,6 +1,6 @@
 # coding: utf-8
-require File.join(File.dirname(__FILE__), *%w[builders html_builder])
-require File.join(File.dirname(__FILE__), *%w[builders xml_builder])
+require 'builders/html_builder'
+require 'builders/xml_builder'
 
 module Navigasmic #:nodoc:
 
@@ -41,7 +41,7 @@ module Navigasmic #:nodoc:
       options[:html][:class] = add_class(options[:html][:class], 'semantic-navigation')
       options[:html][:id] ||= name.to_s.underscore
 
-      builder = options[:builder] || HtmlNavigationBuilder
+      builder = options.delete(:builder) || HtmlNavigationBuilder
       builder.new(@template, name, options, &proc)
     end
 

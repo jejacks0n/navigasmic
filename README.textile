@@ -196,8 +196,60 @@ h3. ERB
 
 h3. XML
 
+The XML Builder isn't hashed out completely, but it more or less generates google sitemap style xml.  I don't know if the format is entirely correct in terms of nesting (it would make sense if it is), and I'd invite anyone who would like to hash it out more to do so.
+
+*Simple Usage Using Builder*
+
 <pre>
-...Still working on the xml builder...
+  xml.instruct! :xml, :version => '1.0', :encoding => 'UTF-8'
+  semantic_navigation :primary, :builder => Navigasmic::XmlNavigationBuilder do |n|
+    n.group 'Media' do
+      n.item 'Image Gallery', :link => {:controller => 'media/images', :action => 'index'}
+      n.item 'Videos', :link => {:controller => 'media/videos'}, :changefreq => 'monthly'
+    end
+	end
+</pre>
+  ...produces...
+<pre>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <urlset>
+      <url>
+        <loc>http://host:port/media/images</loc>
+        <changefreq>yearly</changefreq>
+      </url>
+      <url>
+        <loc>http://host:port/media/videos</loc>
+        <changefreq>monthly</changefreq>
+      </url>
+    </urlset>
+  </urlset>
+</pre>
+
+*Simple Usage Using HAML*
+
+<pre>
+  - semantic_navigation :primary, :builder => Navigasmic::XmlNavigationBuilder, :changefreq => 'daily' do |n|
+    = n.item 'Image Gallery', :link => {:controller => 'media/images', :action => 'index'}
+    = n.item 'Videos', :link => {:controller => 'media/videos'}, :changefreq => 'monthly'
+</pre>
+  ...produces...
+<pre>
+  <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+      <loc>http://host:port/media/images</loc>
+      <changefreq>daily</changefreq>
+    </url>
+    <url>
+      <loc>http://host:port/media/videos</loc>
+      <changefreq>monthly</changefreq>
+    </url>
+  </urlset>
+</pre>
+
+Tip: You can check the template_format and use the XML Builder when it's :xml, and the HTML Builder if not.
+<pre>
+  :builder => template_format == :xml ? Navigasmic::XmlNavigationBuilder : nil
 </pre>
 
 h3. Other
