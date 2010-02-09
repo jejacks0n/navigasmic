@@ -248,9 +248,7 @@ The XML Builder isn't hashed out completely, but it more or less generates googl
 </pre>
 
 Tip: You can check the template_format and use the XML Builder when it's :xml, and the HTML Builder if not.
-<pre>
-  :builder => template_format == :xml ? Navigasmic::XmlNavigationBuilder : nil
-</pre>
+@:builder => template_format == :xml ? Navigasmic::XmlNavigationBuilder : nil@
 
 h3. Other
 
