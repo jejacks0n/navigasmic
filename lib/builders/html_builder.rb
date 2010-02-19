@@ -49,7 +49,7 @@ module Navigasmic
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params)
 
       label = label_for_item(label)
-      label = template.link_to(label, item.link) unless item.link.empty?
+      label = template.link_to(label, item.link) unless item.link.empty? || item.disabled?
 
       template.content_tag(@@item_tag, label + buffer, options.delete(:html))
     end
