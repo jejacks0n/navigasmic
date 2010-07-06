@@ -42,7 +42,7 @@ module Navigasmic #:nodoc:
       options[:html][:id] ||= name.to_s.underscore
 
       builder = options.delete(:builder) || @@builder
-      builder.new(@template, name, options, &proc)
+      builder.new(self, name, options, &proc)
     end
 
     def add_class(classnames, classname)
