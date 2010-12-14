@@ -29,8 +29,9 @@ module Navigasmic
       raise ArgumentError, "Missing block" unless block_given?
 
       buffer = template.capture(self, &proc)
-      template.concat(template.content_tag(@@group_tag, buffer))
-      ''
+
+      visible = options[:hidden_unless].blank? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
+      visible ? template.concat(template.content_tag(@@group_tag, buffer)) : ''
     end
 
     def item(label, options = {}, &proc)
@@ -42,9 +43,8 @@ module Navigasmic
       contents << template.content_tag(:changefreq, options[:changefreq] || @changefreq)
       contents << template.content_tag(:lastmod, options[:lastmod]) if options[:lastmod]
       contents << template.content_tag(:priority, options[:priority]) if options[:priority]
-      
-      template.concat(template.content_tag(@@item_tag, contents + buffer, options.delete(:xml)))
-      ''
+
+      item.hidden? ? '' : template.concat(template.content_tag(@@item_tag, contents + buffer, options.delete(:xml)))
     end
 
   end

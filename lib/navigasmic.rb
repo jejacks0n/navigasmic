@@ -73,6 +73,7 @@ module Navigasmic #:nodoc:
       @link ||= {}
 
       @disabled_conditions = options[:disabled_if] || proc { false }
+      @visible = options[:hidden_unless].blank? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
 
       options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash)
       @highlights_on = options[:highlights_on] || []
@@ -85,6 +86,10 @@ module Navigasmic #:nodoc:
 
     def disabled?
       @disabled_conditions.call
+    end
+
+    def hidden?
+      !@visible
     end
 
     def highlighted?(path, params = {})
