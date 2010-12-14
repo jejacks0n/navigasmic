@@ -30,7 +30,7 @@ module Navigasmic
 
       buffer = template.capture(self, &proc)
 
-      visible = options[:hidden_unless].blank? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
+      visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
       visible ? template.concat(template.content_tag(@@group_tag, buffer)) : ''
     end
 

@@ -34,7 +34,7 @@ module Navigasmic
       group = template.content_tag(@@group_tag, buffer)
       label = label_for_group(label) unless label.blank?
 
-      visible = options[:hidden_unless].blank? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
+      visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
       visible ? template.content_tag(@@item_tag, label.to_s + group, options.delete(:html)) : ''
     end
 
