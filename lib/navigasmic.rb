@@ -73,7 +73,7 @@ module Navigasmic #:nodoc:
       @link ||= {}
 
       @disabled_conditions = options[:disabled_if] || proc { false }
-      @visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? template.instance_eval(options[:hidden_unless]) : options[:hidden_unless]
+      @visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? template.instance_eval(&options[:hidden_unless]) : options[:hidden_unless]
 
       options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash)
       @highlights_on = options[:highlights_on] || []
