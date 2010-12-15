@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{navigasmic}
-  s.version = "0.5.1"
+  s.version = "0.5.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeremy Jackson"]
-  s.date = %q{2010-12-13}
+  s.date = %q{2010-12-15}
   s.description = %q{Semantic navigation; a semantic way to build beautifully simple navigation structures in Rails.}
   s.email = %q{jejacks0n@gmail.com}
   s.extra_rdoc_files = [
