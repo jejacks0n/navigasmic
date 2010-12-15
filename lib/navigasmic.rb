@@ -73,7 +73,7 @@ module Navigasmic #:nodoc:
       @link ||= {}
 
       @disabled_conditions = options[:disabled_if] || proc { false }
-      @visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? options[:hidden_unless].call : options[:hidden_unless]
+      @visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? template.instance_eval(options[:hidden_unless]) : options[:hidden_unless]
 
       options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash)
       @highlights_on = options[:highlights_on] || []
@@ -103,7 +103,7 @@ module Navigasmic #:nodoc:
         when String
           highlighted &= path == highlight
         when Proc
-          h = highlight.call
+          h = template.instance_evel(highlight)
           raise 'proc highlighting rules must evaluate to TrueClass or FalseClass' unless (h.is_a?(TrueClass) || h.is_a?(FalseClass))
           highlighted &= h
         when Hash
