@@ -28,14 +28,14 @@ module Navigasmic
 
       options[:html] ||= {}
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:with_group])
-      options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore
+      options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore unless label.blank?
 
       buffer = template.capture(self, &proc)
       group = template.content_tag(@@group_tag, buffer)
       label = label_for_group(label) unless label.blank?
 
       visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? template.instance_eval(&options[:hidden_unless]) : options[:hidden_unless]
-      visible ? template.content_tag(@@item_tag, label.to_s + group, options.delete(:html)) : ''
+      visible ? template.content_tag(@@item_tag, (label.to_s + group).html_safe, options.delete(:html)) : ''
     end
 
     def item(label, options = {}, &proc)

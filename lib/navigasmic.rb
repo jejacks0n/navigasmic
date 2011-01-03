@@ -75,7 +75,7 @@ module Navigasmic #:nodoc:
       @disabled_conditions = options[:disabled_if] || proc { false }
       @visible = options[:hidden_unless].nil? ? true : options[:hidden_unless].is_a?(Proc) ? template.instance_eval(&options[:hidden_unless]) : options[:hidden_unless]
 
-      options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash)
+      options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash) || options[:highlights_on].kind_of?(String)
       @highlights_on = options[:highlights_on] || []
       @highlights_on << @link if link?
     end
@@ -103,9 +103,11 @@ module Navigasmic #:nodoc:
         when String
           highlighted &= path == highlight
         when Proc
-          h = template.instance_evel(highlight)
+          h = template.instance_eval(highlight)
           raise 'proc highlighting rules must evaluate to TrueClass or FalseClass' unless (h.is_a?(TrueClass) || h.is_a?(FalseClass))
           highlighted &= h
+        when Regexp
+          highlighted &= path.match(highlight)
         when Hash
           h = clean_unwanted_keys(highlight)
           h.each_key do |key|
@@ -114,7 +116,7 @@ module Navigasmic #:nodoc:
             highlighted &= h_key == params[key].to_s
           end
         else
-          raise 'highlighting rules should be a String, Proc or a Hash'
+          raise 'highlighting rules should be a String, Proc, Regexp or a Hash'
         end
 
         result |= highlighted
