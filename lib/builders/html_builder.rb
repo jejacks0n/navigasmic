@@ -47,10 +47,12 @@ module Navigasmic
       options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore
 
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:disabled]) if item.disabled?
-      options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params)
+      options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params, template)
 
       label = label_for_item(label)
-      label = template.link_to(label, item.link, options.delete(:link_html)) unless item.link.empty? || item.disabled?
+      link = item.link.is_a?(Proc) ? template.instance_eval(&item.link) : item.link
+
+      label = template.link_to(label, link, options.delete(:link_html)) unless !item.link? || item.disabled?
 
       item.hidden? ? '' : template.content_tag(@@item_tag, label + buffer, options.delete(:html))
     end

@@ -77,11 +77,18 @@ module Navigasmic #:nodoc:
 
       options[:highlights_on] = [options[:highlights_on]] if options[:highlights_on].kind_of?(Hash) || options[:highlights_on].kind_of?(String)
       @highlights_on = options[:highlights_on] || []
-      @highlights_on << @link if link?
+
+      if link?
+        if @link.is_a?(Proc)
+          @highlights_on << template.instance_eval(&@link)
+        else
+          @highlights_on << @link if link?
+        end
+      end
     end
 
     def link?
-      @link && !@link.empty?
+      @link && !@link.blank?
     end
 
     def disabled?
@@ -92,7 +99,7 @@ module Navigasmic #:nodoc:
       !@visible
     end
 
-    def highlighted?(path, params = {})
+    def highlighted?(path, params = {}, template = nil)
       params = clean_unwanted_keys(params)
       result = false
 
@@ -103,7 +110,7 @@ module Navigasmic #:nodoc:
         when String
           highlighted &= path == highlight
         when Proc
-          h = template.instance_eval(highlight)
+          h = template.instance_eval(&highlight)
           raise 'proc highlighting rules must evaluate to TrueClass or FalseClass' unless (h.is_a?(TrueClass) || h.is_a?(FalseClass))
           highlighted &= h
         when Regexp
