@@ -39,7 +39,7 @@ module Navigasmic #:nodoc:
 
       options[:html] ||= {}
       options[:html][:class] = add_class(options[:html][:class], 'semantic-navigation')
-      options[:html][:id] ||= name.to_s.underscore
+      options[:html][:id] ||= name.to_s.underscore  unless options[:html].has_key?(:id)
 
       builder = options.delete(:builder) || @@builder
       builder.new(self, name, options, &proc)
