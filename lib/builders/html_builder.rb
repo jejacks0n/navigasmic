@@ -28,7 +28,7 @@ module Navigasmic
 
       options[:html] ||= {}
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:with_group])
-      options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore unless label.blank?
+      options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore unless label.blank? || options[:html].has_key?(:id) 
 
       buffer = template.capture(self, &proc)
       group = template.content_tag(@@group_tag, buffer)
@@ -44,7 +44,7 @@ module Navigasmic
       item = NavigationItem.new(label, options, template)
 
       options[:html] ||= {}
-      options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore
+      options[:html][:id] = label.to_s.gsub(/\s/, '_').underscore unless options[:html].has_key?(:id) 
 
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:disabled]) if item.disabled?
       options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params, template)
