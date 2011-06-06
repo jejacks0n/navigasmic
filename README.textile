@@ -266,7 +266,7 @@ RDoc documentation _should_ be automatically generated after each commit and mad
 
 h2. Compatibility
 
-I'm only testing with the latest Rails 2.3.x stable release, and it should work under Rails 2.3.x as well.  Feel free to add backwards compatibility if you need it.
+I'm only testing with the latest Rails 3.x stable release, and it should work under Rails 2.3.x as well.  Feel free to add backwards compatibility if you need it.
 
 h2. Project Info
 
