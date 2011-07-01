@@ -27,7 +27,7 @@ module Navigasmic
       raise ArgumentError, "Missing block" unless block_given?
 
       options[:html] ||= {}
-      options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:with_group])
+      options[:html][:class] = template.add_html_class(options[:html][:class], @@classnames[:with_group])
       options[:html][:id] ||= label.to_s.gsub(/\s/, '_').underscore unless label.blank? || options[:html].has_key?(:id) 
 
       buffer = template.capture(self, &proc)
@@ -46,8 +46,8 @@ module Navigasmic
       options[:html] ||= {}
       options[:html][:id] = label.to_s.gsub(/\s/, '_').underscore unless options[:html].has_key?(:id) 
 
-      options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:disabled]) if item.disabled?
-      options[:html][:class] = template.add_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params, template)
+      options[:html][:class] = template.add_html_class(options[:html][:class], @@classnames[:disabled]) if item.disabled?
+      options[:html][:class] = template.add_html_class(options[:html][:class], @@classnames[:highlighted]) if item.highlighted?(template.request.path, template.params, template)
 
       label = label_for_item(label)
       link = item.link.is_a?(Proc) ? template.instance_eval(&item.link) : item.link
