@@ -38,14 +38,14 @@ module Navigasmic #:nodoc:
       options = args.extract_options!
 
       options[:html] ||= {}
-      options[:html][:class] = add_class(options[:html][:class], 'semantic-navigation')
+      options[:html][:class] = add_html_class(options[:html][:class], 'semantic-navigation')
       options[:html][:id] ||= name.to_s.underscore  unless options[:html].has_key?(:id)
 
       builder = options.delete(:builder) || @@builder
       builder.new(self, name, options, &proc)
     end
 
-    def add_class(classnames, classname)
+    def add_html_class(classnames, classname)
       out = (classnames.is_a?(String) ? classnames.split(' ') : []) << classname
       out.join(' ')
     end
