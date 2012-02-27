@@ -4,6 +4,39 @@ require 'builders/xml_builder'
 
 module Navigasmic #:nodoc:
 
+  mattr_accessor :with_group_class
+  @@with_group_class = 'with-group'
+
+  mattr_accessor :disabled_class
+  @@disabled = 'disabled'
+
+  mattr_accessor :highlighted_class
+  @@highlighted = 'highlighted'
+
+  mattr_accessor :wrapper_tag
+  @@wrapper_tag = :ul
+
+  mattr_accessor :group_tag
+  @@group_tag = :ul
+
+  mattr_accessor :item_tag
+  @@item_tag = :li
+
+  mattr_accessor :label_tag
+  @@label_tag = :span
+
+
+  # Configuration helper
+  #
+  # Example usage:
+  #
+  #   Navigasmic.setup do |config|
+  #     config.highlighted_class = 'active'
+  #   end
+  def self.setup
+    yield self
+  end
+
   # Semantic navigation helper methods
   #
   # Example Usage:
