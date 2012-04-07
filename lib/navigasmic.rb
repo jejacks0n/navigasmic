@@ -11,7 +11,7 @@ module Navigasmic #:nodoc:
   @@disabled = 'disabled'
 
   mattr_accessor :highlighted_class
-  @@highlighted = 'highlighted'
+  @@highlighted = 'active'
 
   mattr_accessor :wrapper_tag
   @@wrapper_tag = :ul
