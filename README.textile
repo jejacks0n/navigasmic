@@ -35,16 +35,16 @@ Currently the HTML builder generates UL and LI tags, which helps with SEO, and t
 
 h2. Installation
 
-The gem is hosted on gemcutter, so *if you haven't already*, add it as a gem source:
-
-<pre>
-  sudo gem sources -a http://gemcutter.org/
-</pre>
-
 Then install the navigasmic gem:
 
 <pre>
-  sudo gem install navigasmic
+  gem install navigasmic
+</pre>
+
+or add it to your <code>Gemfile</code>:
+
+<pre>
+  gem 'navigasmic'
 </pre>
 
 h2. Usage
