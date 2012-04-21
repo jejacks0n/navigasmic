@@ -35,7 +35,7 @@ Currently the HTML builder generates UL and LI tags, which helps with SEO, and t
 
 h2. Installation
 
-Then install the navigasmic gem:
+Install the navigasmic gem:
 
 <pre>
   gem install navigasmic
