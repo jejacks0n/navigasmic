@@ -1,0 +1,73 @@
+<h3>Rendering navigation defined in configuration</h3>
+<%= semantic_navigation :primary, config: :blockquote %>
+
+<h3>Rendering navigation defined in view</h3>
+<%= semantic_navigation :primary do |n| %>
+  <!-- Adding custom markup in the view -->
+  <li>Custom node</li>
+
+  <!-- Various examples of group method -->
+  <% n.group 'Group' do %>
+    <li>Custom node - should be rendered</li>
+  <% end %>
+  <% n.group 'Group with various attributes', data: {attr: true}, class: 'foo' do %>
+    Custom content - should be rendered
+  <% end %>
+  <% n.group 'Nested groups' do %>
+    <% n.group 'Level 1' do %>
+      <% n.group 'Level 2' do %>
+        Custom content - should be rendered
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <!-- Using hidden_unless for groups -->
+  <% n.group 'Hidden unless: true', class: 'foo', hidden_unless: true do %>
+    Custom content - should be rendered
+  <% end %>
+  <% n.group 'Hidden unless: false', hidden_unless: false do %>
+    Custom content - shouldn't be rendered
+  <% end %>
+  <% n.group 'Hidden unless: proc{ false }', hidden_unless: proc{ false } do %>
+    Custom content - shouldn't be rendered
+  <% end %>
+
+  <% n.group 'Various item examples within a group' do %>
+    <% n.item 'Using a string for href and various attributes', '/my_awesome_blog', data: {attr: true}, class: 'foo' %>
+    <% n.item 'Providing the controller in options', controller: '/blog/posts', class: 'foo' %>
+    <% n.item 'Providing the controller in the link option', link: {controller: '/blog/posts'} %>
+
+    <!-- Only providing the label, which should auto-link to the images controller -->
+    <% n.item 'My Awesome Blog' %>
+  <% end %>
+
+  <% n.group 'Highlighting under various situations' do %>
+    <% n.item 'When the highlight param is set', highlights_on: params[:highlight].present? %>
+    <% n.item 'Always (using an array)', highlights_on: [true, false, false] %>
+    <% n.item 'When the highlight param is set (using a proc)', highlights_on: proc{ params[:highlight].present? } %>
+    <% n.item 'When the highlight param is set (using a proc in an array)', highlights_on: [proc{ params[:highlight].present? }] %>
+    <% n.item 'When on any path beginning with "my_aw" (using regexp)', highlights_on: [/^\/my_aw/] %>
+    <% n.item 'When on "/my_awesome_blog" (using string)', highlights_on: '/my_awesome_blog' %>
+    <% n.item 'When on any action in the application controller', highlights_on: {controller: 'application'} %>
+  <% end %>
+
+  <!-- Examples of disabling items -->
+  <% n.item 'Disabled if: false', disabled_if: false %>
+  <% n.item 'Disabled if: true', disabled_if: true %>
+  <% n.item 'Disabled if: proc{ true }', disabled_if: proc{ true } %>
+
+  <!-- Examples of hiding items -->
+  <% n.item 'Hidden unless: false', hidden_unless: false %>
+  <% n.item 'Hidden unless: true', hidden_unless: true %>
+  <% n.item 'Hidden unless: proc{ true }', hidden_unless: proc{ true } %>
+
+  <% n.item t("hello"), '/foo' %>
+
+  <% n.item 'Nested items', '/blog/posts', disabled_if: false do %>
+    <% n.item 'Level 1', '/my_awesome_blog' do %>
+      <% n.item 'Level 2', '/foo', disabled_if: true do %>
+        <li>Custom node</li>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
