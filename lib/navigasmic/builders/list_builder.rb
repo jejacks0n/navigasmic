@@ -2,8 +2,9 @@ module Navigasmic::Builder
   class ListBuilder < Base
     class Configuration < Base::Configuration
 
-      attr_accessor :wrapper_class, :with_group_class, :disabled_class, :highlighted_class
-      attr_accessor :wrapper_tag, :group_tag, :item_tag, :label_generator
+      attr_accessor :wrapper_class, :has_nested_class, :is_nested_class, :disabled_class, :highlighted_class
+      attr_accessor :wrapper_tag, :group_tag, :item_tag
+      attr_accessor :link_generator, :label_generator
 
       def initialize
         # which keys (for other builder) should be removed from options
@@ -13,13 +14,17 @@ module Navigasmic::Builder
         @wrapper_tag = :ul
         @group_tag = :ul
         @item_tag = :li
-        @label_generator = proc{ |label| "<span>#{label}</span>" }
 
         # class configurations
         @wrapper_class = 'semantic-navigation'
-        @with_group_class = 'with-group'
+        @has_nested_class = 'has-nested'
+        @is_nested_class = 'is-nested'
         @disabled_class = 'disabled'
         @highlighted_class = 'active'
+
+        # generator callbacks
+        @link_generator = proc{ |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }
+        @label_generator = proc{ |label, is_linked, is_nested| "<span>#{label}</span>" }
 
         super
       end
@@ -58,18 +63,22 @@ module Navigasmic::Builder
     private
 
     def structure_for(label, link = false, options = {}, &block)
-      label = label_for(label, link, options)
+      label = label_for(label, link, block_given?, options)
+
       content = ''
       if block_given?
-        merge_classes!(options, @config.with_group_class)
-        content = content_tag(@config.group_tag, capture(&block))
+        merge_classes!(options, @config.has_nested_class)
+        content = content_tag(@config.group_tag, capture(&block), {class: @config.is_nested_class})
       end
+
       content_tag(@config.item_tag, "#{label}#{content}".html_safe, options)
     end
 
-    def label_for(label, link, options)
-      label = label.present? ? @config.label_generator.call(label).html_safe : ''
-      label = link_to(label, link, options.delete(:link_html)) if link
+    def label_for(label, link, is_nested = false, options = {})
+      if label.present?
+        label = @context.instance_exec(label, !!link, is_nested, &@config.label_generator).html_safe
+      end
+      label = @context.instance_exec(label, link, options.delete(:link_html) || {}, is_nested, &@config.link_generator).html_safe if link
       label
     end
 

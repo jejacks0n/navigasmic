@@ -53,7 +53,7 @@ replaced if you need more custom markup -- there's more on how to do that stuff 
 
 ## Installation
 
-Include the gem in your Gemfile and bundle to install the gem.
+Include the gem in your Gemfile and bundle to install the gem.  (Navigasmic requires Ruby 1.9+)
 
     gem 'navigasmic'
 
@@ -122,6 +122,11 @@ configurations for each builder.
 When you invoke the `semantic_navigation` method you can provide which builder you want to use, and the named
 configuration for that builder.  By defining these builder specific configurations you'll be able to render navigation
 differently in different parts of your site using the same builder.  This allows for the greatest flexibility.
+
+### Bootstrap Support
+
+[Twitter Bootstrap](http://twitter.github.com/bootstrap/components.html#navs) is pretty awesome, so it's worth supporting.  There's a configuration that's provided in the
+initializer that allows for nice bootstrap support.  It handles nav-pills, nav-tabs, and the [navbar](http://twitter.github.com/bootstrap/components.html#navbar) structure.
 
 ### Options
 
@@ -209,6 +214,7 @@ that's pretty easy to style and work with.
   - `excluded_keys` -
     *Array*: Allows specifying keys that are ignored in options (you may want to ignore keys used by other builders.)
     Default: `[:map]`
+
   - `wrapper_tag` -
     *Symbol (or String)*: Tag used for the top level element.
     Default: `:ul`
@@ -218,14 +224,15 @@ that's pretty easy to style and work with.
   - `item_tag` -
     *Symbol (or String)*: Tag used for wrapping specific items.
     Default: `:li`
-  - `label_generator` -
-    *Proc*: Called when inserting labels.
-    Default: `proc{ |label| "<span>#{label}</span>" }`
+
   - `wrapper_class` -
     *String*: The classname that will be applied to the top level element.
     Default: `'semantic-navigation'`
-  - `with_group_class` -
+  - `has_nested_class` -
     *String*: The classname that will be applied to any group (or item with nested items).
+    Default: `'with-group'`
+  - `is_nested_class` -
+    *String*: The classname that will be applied to any nested items (within a group or item).
     Default: `'with-group'`
   - `disabled_class` -
     *String*: The classname that will be applied to disabled items.
@@ -233,6 +240,13 @@ that's pretty easy to style and work with.
   - `highlighted_class` -
     *String*: The classname that will be applied to items that should be highlighted.
     Default: `'active'`
+
+  - `label_generator` -
+    *Proc*: Called when inserting labels into items or groups.
+    Default: `proc{ |label, has_link, has_nested| "<span>#{label}</span>" }`
+  - `link_generator` -
+    *Proc*: Called when generating links.
+    Default: `proc{ |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }`
 
 ### MapBuilder Options
 
