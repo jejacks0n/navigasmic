@@ -194,12 +194,12 @@ Hide rules allow for you to pass a Boolean or Proc.  The following examples will
 
 Navigasmic comes with a few builders by default.  Here's a breakdown of what's available, and what each one does.
 
-Navigasmic::Builder::ListBuilder
-: Builds an HTML structure of UL and LI tags.  Useful for most navigation structured rendered in markup.
-Navigasmic::Builder::MapBuilder (incomplete)
-: Builds an XML structure that use the [Sitemaps XML format](http://www.sitemaps.org/protocol.html)
-Navigasmic::Builder::CrumbBuilder (incomplete)
-: Builds an HTML structure of A tags based on the first highlighted item it finds and up.  Useful for breadcrumbs.
+- **Navigasmic::Builder::ListBuilder**<br/>
+  Builds an HTML structure of UL and LI tags.  Useful for most navigation structured rendered in markup.
+- **Navigasmic::Builder::MapBuilder**<br/>
+  Builds an XML structure that use the [Sitemaps XML format](http://www.sitemaps.org/protocol.html)
+- **Navigasmic::Builder::CrumbBuilder** (incomplete)<br>
+  Builds an HTML structure of A tags based on the first highlighted item it finds and up.  Useful for breadcrumbs.
 
 A simple example of using the MapBuilder -- create a `[action].xml.builder` view, and add the following:
 
