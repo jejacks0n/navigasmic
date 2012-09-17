@@ -201,6 +201,56 @@ Navigasmic comes with a few builders by default.  Here's a breakdown of what's a
 - **Navigasmic::Builder::CrumbBuilder** (incomplete)<br>
   Builds an HTML structure of A tags based on the first highlighted item it finds and up.  Useful for breadcrumbs.
 
+### ListBuilder Options
+
+The ListBuilder is the default builder (unless otherwise specified in the initializer).  It builds a UL/LI structure
+that's pretty easy to style and work with.
+
+  - `excluded_keys` -
+    *Array*: Allows specifying keys that are ignored in options (you may want to ignore keys used by other builders.)
+    Default: `[:map]`
+  - `wrapper_tag` -
+    *Symbol (or String)*: Tag used for the top level element.
+    Default: `:ul`
+  - `group_tag` -
+    *Symbol (or String)*: Tag used for wrapping groups.
+    Default: `:ul`
+  - `item_tag` -
+    *Symbol (or String)*: Tag used for wrapping specific items.
+    Default: `:li`
+  - `label_generator` -
+    *Proc*: Called when inserting labels.
+    Default: `proc{ |label| "<span>#{label}</span>" }`
+  - `wrapper_class` -
+    *String*: The classname that will be applied to the top level element.
+    Default: `'semantic-navigation'`
+  - `with_group_class` -
+    *String*: The classname that will be applied to any group (or item with nested items).
+    Default: `'with-group'`
+  - `disabled_class` -
+    *String*: The classname that will be applied to disabled items.
+    Default: `'disabled'`
+  - `highlighted_class` -
+    *String*: The classname that will be applied to items that should be highlighted.
+    Default: `'active'`
+
+### MapBuilder Options
+
+The MapBuilder is used for generate XML sitemaps that follow the protocol laid out by the [Sitemaps XML format](http://www.sitemaps.org/protocol.html).
+
+  - `excluded_keys` -
+    *Array*: Allows specifying keys that are ignored in options (you may want to ignore keys used by other builders.)
+    Default: `[]`
+  - `option_namespace` -
+    *Symbol (or String)*: Option key that holds the map specific options (eg. :changefreq, :priority, :lastmod etc.)
+    Default: `:map`
+  - `wrapper_tag` -
+    *Symbol (or String)*: Tag used for the top level element.
+    Default: `:urlset`
+  - `item_tag` -
+    *Symbol (or String)*: Tag used for wrapping specific items (groups are not used in this builder.)
+    Default: `:url`
+
 A simple example of using the MapBuilder -- create a `[action].xml.builder` view, and add the following:
 
     xml.instruct!
