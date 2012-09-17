@@ -39,8 +39,6 @@ module Navigasmic::Builder
       raise ArgumentError, "Missing block for group" unless block_given?
       return '' unless visible?(options)
 
-      merge_classes!(options, @config.with_group_class)
-
       concat(structure_for(label, false, options, &block))
     end
 
@@ -61,7 +59,11 @@ module Navigasmic::Builder
 
     def structure_for(label, link = false, options = {}, &block)
       label = label_for(label, link, options)
-      content = block_given? ? content_tag(@config.group_tag, capture(&block)) : ''
+      content = ''
+      if block_given?
+        merge_classes!(options, @config.with_group_class)
+        content = content_tag(@config.group_tag, capture(&block))
+      end
       content_tag(@config.item_tag, "#{label}#{content}".html_safe, options)
     end
 
