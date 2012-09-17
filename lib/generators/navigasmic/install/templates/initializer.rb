@@ -111,8 +111,9 @@ Navigasmic.setup do |config|
   # </div>
   config.builder bootstrap: Navigasmic::Builder::ListBuilder do |builder|
 
-    # Set the nav and nav-pills css (you can also use 'nav nav-tabs')
-    builder.wrapper_class = 'nav'
+    # Set the nav and nav-pills css (you can also use 'nav nav-tabs') -- or remove them if you're using this inside a
+    # navbar.
+    builder.wrapper_class = 'nav nav-pills'
 
     # Set the classed for items that have nested items, and that are nested items.
     builder.has_nested_class = 'dropdown'
