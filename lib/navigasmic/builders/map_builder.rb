@@ -43,10 +43,10 @@ module Navigasmic::Builder
 
       item = Navigasmic::Item.new(self, label, extract_and_determine_link(label, options, *args), options)
 
+      concat(capture(&block)) if block_given?
       return '' unless item.link?
 
       concat(structure_for(label, item.link, options))
-      concat(capture(&block)) if block_given?
     end
 
     private
