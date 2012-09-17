@@ -214,7 +214,6 @@ that's pretty easy to style and work with.
   - `excluded_keys` -
     *Array*: Allows specifying keys that are ignored in options (you may want to ignore keys used by other builders.)
     Default: `[:map]`
-
   - `wrapper_tag` -
     *Symbol (or String)*: Tag used for the top level element.
     Default: `:ul`
@@ -224,7 +223,6 @@ that's pretty easy to style and work with.
   - `item_tag` -
     *Symbol (or String)*: Tag used for wrapping specific items.
     Default: `:li`
-
   - `wrapper_class` -
     *String*: The classname that will be applied to the top level element.
     Default: `'semantic-navigation'`
@@ -240,7 +238,6 @@ that's pretty easy to style and work with.
   - `highlighted_class` -
     *String*: The classname that will be applied to items that should be highlighted.
     Default: `'active'`
-
   - `label_generator` -
     *Proc*: Called when inserting labels into items or groups.
     Default: `proc{ |label, has_link, has_nested| "<span>#{label}</span>" }`
