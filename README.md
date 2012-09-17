@@ -70,12 +70,6 @@ You can also get the initializer by running the install generator.
 Navigasmic allows you to define navigation in two ways.  The first is directly in your views (in a partial, or layout
 for instance), and the second is via a global configuration (similar to how [simple-navigation](https://github.com/andi/simple-navigation) works).
 
-### View Helper
-
-The `semantic_navigation` method in Navigasmic provides a single name for defining and rendering navigation.  You can
-use this method in your layouts, views, and partials to render navigation structures, and can define these structures
-in the initializer, or in your views directly.
-
 ### Defining Navigation in Initializer
 
     config.semantic_navigation :primary do |n|
@@ -92,11 +86,19 @@ in the initializer, or in your views directly.
 
 ### Rendering Navigation (based on navigation defined in initializer)
 
-    semantic_navigation :primary, class: 'my-navigation'
+The `semantic_navigation` method in Navigasmic provides a single name for defining and rendering navigation.  You can
+use this method in your layouts, views, and partials to render navigation structures that you've defined in the
+initializer.
+
+    <%= semantic_navigation :primary, class: 'my-navigation' %>
 
 ### Definition Navigation / Rendering in Views
 
-#### ERB
+While it's nice to be able to define navigation in the initializer, it's also nice to be able to prototype out some
+navigation in the views directly.  You can do this by simply passing a block to the `semantic_navigation` helper.  By
+passing it a block you're able to define the navigation structure easily and quickly.
+
+**ERB**
 
     <%= semantic_navigation :primary, builder: Navigasmic::Builder::ListBuilder, class: 'my-navigation' do |n| %>
       <% n.group 'Blog', class: 'blog' do %>
@@ -110,13 +112,16 @@ in the initializer, or in your views directly.
          end %>
     <% end %>
 
-#### HAML
+**HAML**
 
     = semantic_navigation :primary, config: :bootstrap, class: 'my-navigation' do |n|
       - n.group 'Blog', class: 'blog' do
         %li Custom Node
         - n.item 'Articles', controller: '/blog/posts'
         - n.item 'Links', controller: '/blog/links'
+      - n.group 'Info' do
+        - n.item 'Me', '/about', title: 'The Awesomeness That Is'
+        - n.item 'My Portfolio'
 
 ### Configuring
 
