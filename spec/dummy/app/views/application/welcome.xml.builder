@@ -1,2 +1,2 @@
 xml.instruct!
-xml << semantic_navigation(:primary, builder: Navigasmic::Builder::MapBuilder)
+xml << semantic_navigation(:testing, builder: Navigasmic::Builder::MapBuilder)

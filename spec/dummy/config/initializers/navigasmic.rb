@@ -71,6 +71,14 @@ Navigasmic.setup do |config|
   end
 
 
+  # Setting the Default Builder:
+  #
+  # By default the Navigasmic::Builder::ListBuilder is used unless otherwise specified.
+  #
+  # You can change this here:
+  #config.default_builder = MyCustomBuilder
+
+
   # Configuring Builders:
   #
   # You can change various builder options here by specifying the builder you want to configure and the options you
@@ -85,22 +93,52 @@ Navigasmic.setup do |config|
   # Naming Builder Configurations:
   #
   # If you want to define a named configuration for a builder, just provide a hash with the name, and the builder to
-  # configure.  The named configurations can then be used during rendering by specifying a `:config => :blockquote`
+  # configure.  The named configurations can then be used during rendering by specifying a `:config => :bootstrap`
   # option to the `semantic_navigation` view helper.
   #
-  # A blockquote alternative for navigation:
-  config.builder blockquote: Navigasmic::Builder::ListBuilder do |builder|
-    builder.wrapper_tag = :blockquote
-    builder.group_tag = :blockquote
-    builder.item_tag = :blockquote
-  end
-
-
-  # A Twitter Bootstrap Configuration:
+  # A Twitter Bootstrap configuration:
   #
-  # You can read more about twitter bootstrap: http://twitter.github.com/bootstrap/
-  #config.builder bootstrap: Navigasmic::Builder::ListBuilder do |builder|
-  #  builder.highlighted_class = 'active'
-  #end
+  # Example usage:
+  #
+  # <%= semantic_navigation :primary, config: :bootstrap, class: 'nav-pills' %>
+  #
+  # Or to create a full navigation bar using twitter bootstrap you could use the following in your view:
+  # <div class="navbar">
+  #   <div class="navbar-inner">
+  #     <a class="brand" href="/">Title</a>
+  #     <%= semantic_navigation :primary, config: :bootstrap %>
+  #   </div>
+  # </div>
+  config.builder bootstrap: Navigasmic::Builder::ListBuilder do |builder|
+
+    # Set the nav and nav-pills css (you can also use 'nav nav-tabs')
+    builder.wrapper_class = 'nav'
+
+    # Set the classed for items that have nested items, and that are nested items.
+    builder.has_nested_class = 'dropdown'
+    builder.is_nested_class = 'dropdown-menu'
+
+    # For dropdowns to work you'll need to include the bootstrap dropdown js
+    # For groups, we adjust the markup so they'll be clickable and be picked up by the javascript.
+    builder.label_generator = proc do |label, has_link, has_nested|
+      if !has_nested || has_link
+        "<span>#{label}</span>"
+      else
+        link_to("#{label}<b class='caret'></b>".html_safe, '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'})
+      end
+    end
+
+    # For items, we adjust the links so they're '#', and do the same as for groups.  This allows us to use more complex
+    # highlighting rules for dropdowns.
+    builder.link_generator = proc do |label, link, options, has_nested|
+      if has_nested
+        link = '#'
+        label << "<b class='caret'></b>"
+        options.merge!(class: 'dropdown-toggle', data: {toggle: 'dropdown'})
+      end
+      link_to(label, link, options)
+    end
+
+  end
 
 end

@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Navigasmic: Regression Test</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css"/>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap.min.js"></script>
     <style>
       .foo {
         color: #0f0;
@@ -22,16 +25,12 @@
   </head>
   <body>
 
-    <%= semantic_navigation :primary do |n| %>
-      <% n.item 'Home', root_path %>
-      <% n.item 'Site Map', root_path(format: 'xml') %>
-      <% n.group 'Blog', class: 'blog' do %>
-        <li>Custom Node</li>
-        <% n.item 'Articles', controller: '/blog/posts' %>
-        <% n.item 'Links', controller: '/blog/links' %>
-        <% n.item 'Specific Article', link: {controller: '/blog/posts', action: 'show', id: '2'} %>
-      <% end %>
-    <% end %>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="/">Title</a>
+        <%= semantic_navigation :testing, config: :bootstrap %>
+      </div>
+    </div>
 
     <%= yield %>
 
