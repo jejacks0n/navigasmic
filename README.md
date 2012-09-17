@@ -76,7 +76,7 @@ The `semantic_navigation` method in Navigasmic provides a single name for defini
 use this method in your layouts, views, and partials to render navigation structures, and can define these structures
 in the initializer, or in your views directly.
 
-#### Initializer Definition Example
+### Defining Navigation in Initializer
 
     config.semantic_navigation :primary do |n|
       n.group 'Blog', class: 'blog' do
@@ -90,7 +90,13 @@ in the initializer, or in your views directly.
       end
     end
 
-#### View Definition / Rendering Example (ERB)
+### Rendering Navigation (based on navigation defined in initializer)
+
+    semantic_navigation :primary, class: 'my-navigation'
+
+### Definition Navigation / Rendering in Views
+
+#### ERB
 
     <%= semantic_navigation :primary, builder: Navigasmic::Builder::ListBuilder, class: 'my-navigation' do |n| %>
       <% n.group 'Blog', class: 'blog' do %>
@@ -104,17 +110,13 @@ in the initializer, or in your views directly.
          end %>
     <% end %>
 
-#### View Definition / Rendering Example (HAML)
+#### HAML
 
     = semantic_navigation :primary, config: :bootstrap, class: 'my-navigation' do |n|
       - n.group 'Blog', class: 'blog' do
         %li Custom Node
         - n.item 'Articles', controller: '/blog/posts'
         - n.item 'Links', controller: '/blog/links'
-
-#### View Rendering (based on definitions in initializer)
-
-    semantic_navigation :primary, class: 'my-navigation'
 
 ### Configuring
 
@@ -160,7 +162,7 @@ blog posts (they will also only highlight on the given record):
     n.item 'Article', class: 'featured', link: {controller: '/blog/posts', action: 'show', id: '42'}
 
 Note that we're passing a string for the posts id.. That's because when the param comes in and is compared against the
-link options you provided the types need to match.
+link options you provided, the types need to match.
 
 If you don't provide a link, Navigasmic attempts to find a path helper from the label.  In the following example we
 only provide the label, but if I've defined a route (eg. `match '/portfolio' => 'portfolio#index', as: 'my_portfolio'`)
