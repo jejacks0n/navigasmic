@@ -1,0 +1,7 @@
+rvm:
+  - 1.9.3
+before_script:
+  - 'sh -e /etc/init.d/xvfb start'
+env:
+  - DISPLAY=':99.0'
+script: bundle exec rake --trace

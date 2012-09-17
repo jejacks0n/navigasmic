@@ -1,5 +1,8 @@
 # Navigasmic
 
+[![Build Status](https://secure.travis-ci.org/jejacks0n/navigasmic.png)](http://travis-ci.org/jejacks0n/navigasmic)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/jejacks0n/navigasmic)
+
 Semantic navigation; a semantic way to build beautifully simple navigation structures in Rails views or configuration.
 
 
