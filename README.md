@@ -173,7 +173,7 @@ following examples will highlight:
 
 #### Disabling
 
-Disble rules allow for you to pass a Boolean or Proc.  The following examples will be disabled:
+Disable rules allow for you to pass a Boolean or Proc.  The following examples will be disabled:
 
     n.item 'On Tuesdays, and when not logged in', disabled_if: proc{ Time.now.wday == 2 || !logged_in? }
     n.item 'Never', disabled_if: false
