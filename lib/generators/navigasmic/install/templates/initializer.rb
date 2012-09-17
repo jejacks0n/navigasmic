@@ -71,6 +71,14 @@ Navigasmic.setup do |config|
   end
 
 
+  # Setting the Default Builder:
+  #
+  # By default the Navigasmic::Builder::ListBuilder is used unless otherwise specified.
+  #
+  # You can change this here:
+  #config.default_builder = MyCustomBuilder
+
+
   # Configuring Builders:
   #
   # You can change various builder options here by specifying the builder you want to configure and the options you
