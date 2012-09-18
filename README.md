@@ -282,7 +282,7 @@ A simple example of using the MapBuilder -- create a `[action].xml.builder` view
 
 Licensed under the [MIT License](http://opensource.org/licenses/mit-license.php)
 
-Copyright 2011 [Jeremy Jackson](https://github.com/jejacks0n)
+Copyright 2012 [Jeremy Jackson](https://github.com/jejacks0n)
 
 
 ## Enjoy =)
