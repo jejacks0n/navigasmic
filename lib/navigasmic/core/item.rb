@@ -1,13 +1,12 @@
 class Navigasmic::Item
 
   attr_accessor :link
-  def initialize(builder, label, link, options = {})
-    @label, @link = label, link
+  def initialize(label, link, visible, options = {})
+    @label, @link, @visible = label, link, visible
     @disabled = options.delete(:disabled_if)
-    @visible = builder.send(:visible?, options)
     options.delete(:hidden_unless)
 
-    highlighting_from(options.delete(:highlights_on))
+    @rules = calculate_highlighting_rules(options.delete(:highlights_on))
   end
 
   def hidden?
@@ -26,16 +25,16 @@ class Navigasmic::Item
     params = clean_unwanted_keys(params)
     result = false
 
-    @highlights_on.each do |highlight|
+    @rules.each do |rule|
       highlighted = true
 
-      case highlight
-        when String then highlighted &= path == highlight
-        when Regexp then highlighted &= path.match(highlight)
-        when TrueClass then highlighted &= highlight
-        when FalseClass then highlighted &= highlight
+      case rule
+        when String then highlighted &= path == rule
+        when Regexp then highlighted &= path.match(rule)
+        when TrueClass then highlighted &= rule
+        when FalseClass then highlighted &= rule
         when Hash
-          clean_unwanted_keys(highlight).each do |key, value|
+          clean_unwanted_keys(rule).each do |key, value|
             value.gsub!(/^\//, '') if key == :controller
             highlighted &= value == params[key].to_s
           end
@@ -50,12 +49,12 @@ class Navigasmic::Item
 
   private
 
-  def highlighting_from(rules)
-    @highlights_on = []
-    @highlights_on << @link if link?
+  def calculate_highlighting_rules(rules)
+    highlighting_rules = []
+    highlighting_rules << @link if link?
 
-    return if rules.blank?
-    @highlights_on += rules.kind_of?(Array) ? rules : [rules]
+    return [] if highlighting_rules.blank?
+    highlighting_rules += Array(rules)
   end
 
   def clean_unwanted_keys(hash)

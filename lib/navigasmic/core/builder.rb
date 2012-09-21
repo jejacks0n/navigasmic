@@ -18,7 +18,7 @@ module Navigasmic::Builder
       raise ArgumentError, "Missing block or configuration" unless @definition
 
       @context, @name, @options = context, name, options
-      @config = configuration_or_default
+      @config = configuration_or_default(@options.delete(:config))
       remove_excluded_options(@options)
     end
 
@@ -26,7 +26,7 @@ module Navigasmic::Builder
       raise "Expected subclass to implement group"
     end
 
-    def item(label, *args, &block)
+    def item(label = nil, *args, &block)
       raise "Expected subclass to implement item"
     end
 
@@ -36,9 +36,9 @@ module Navigasmic::Builder
 
   private
 
-    def configuration_or_default
+    def configuration_or_default(config = nil)
       configurations = Navigasmic.configuration.builder_configurations[self.class.to_s]
-      proc = configurations.present? ? configurations[@options.delete(:config) || :default] : nil
+      proc = configurations.present? ? configurations[config || :default] : nil
       self.class::Configuration.new(&proc)
     end
 

@@ -4,6 +4,8 @@ module Navigasmic::Builder
 
       attr_accessor :option_namespace
       attr_accessor :wrapper_tag, :group_tag, :item_tag, :label_generator
+      attr_accessor :xmlns, :xmlns_xsi, :schema_location
+      attr_accessor :changefreq, :item_changefreq
 
       def initialize
         # where you want the changefreq and other options to be looked for
@@ -13,16 +15,25 @@ module Navigasmic::Builder
         @wrapper_tag = :urlset
         @item_tag = :url
 
+        # xml namespace / schema
+        @xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+        @xmlns_xsi = 'http://www.w3.org/2001/XMLSchema-instance'
+        @schema_location = 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'
+
+        # misc defaults
+        @changefreq = 'yearly'
+        @item_changefreq = 'yearly'
+
         super
       end
     end
 
     def initialize(context, name, options, &block)
       super
-      @options['xmlns'] ||= 'http://www.sitemaps.org/schemas/sitemap/0.9'
-      @options['xmlns:xsi'] ||= 'http://www.w3.org/2001/XMLSchema-instance'
-      @options['xsi:schemaLocation'] ||= 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'
-      @options[:changefreq] ||= 'yearly'
+      @options['xmlns'] ||= @config.xmlns
+      @options['xmlns:xsi'] ||= @config.xmlns_xsi
+      @options['xsi:schemaLocation'] ||= @config.schema_location
+      @options[:changefreq] ||= @config.changefreq
     end
 
     def render
@@ -41,7 +52,7 @@ module Navigasmic::Builder
       options = flatten_and_eval_options(options)
       return '' unless visible?(options)
 
-      item = Navigasmic::Item.new(self, label, extract_and_determine_link(label, options, *args), options)
+      item = Navigasmic::Item.new(label, extract_and_determine_link(label, options, *args), visible?(options), options)
 
       concat(capture(&block)) if block_given?
       return '' unless item.link?
@@ -55,7 +66,7 @@ module Navigasmic::Builder
       content = content_tag(:loc, link_for(link, options))
       content << content_tag(:name, label)
       if opts = options.delete(@config.option_namespace)
-        content << content_tag(:changefreq, opts[:changefreq] || 'yearly')
+        content << content_tag(:changefreq, opts[:changefreq] || @config.item_changefreq)
         content << content_tag(:lastmod, opts[:lastmod]) if opts.has_key?(:lastmod)
         content << content_tag(:priority, opt[:priority]) if opts.has_key?(:priority)
       end
@@ -67,8 +78,9 @@ module Navigasmic::Builder
       host = options.delete(:host) || @context.request.host
       if link.is_a?(Hash)
         link[:host] ||= host
-      else
-        link = "#{@context.request.protocol}#{host}#{@context.request.port}#{link}"
+      elsif link[0] == '/'
+        port = @context.request.port == 80 ? '' : ":#{@context.request.port}"
+        link = "#{@context.request.protocol}#{host}#{port}#{link}"
       end
       url_for(link)
     end

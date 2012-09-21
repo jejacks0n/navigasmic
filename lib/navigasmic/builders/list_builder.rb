@@ -40,11 +40,15 @@ module Navigasmic::Builder
       content_tag(@config.wrapper_tag, capture(&@definition), @options)
     end
 
-    def group(label = nil, options = {}, &block)
+    def group(label_or_options = nil, options = {}, &block)
       raise ArgumentError, "Missing block for group" unless block_given?
+      if label_or_options.is_a?(Hash)
+        options = label_or_options
+        label_or_options = nil
+      end
       return '' unless visible?(options)
 
-      concat(structure_for(label, false, options, &block))
+      concat(structure_for(label_or_options, false, options, &block))
     end
 
     def item(label, *args, &block)
@@ -52,7 +56,7 @@ module Navigasmic::Builder
       options = flatten_and_eval_options(options)
       return '' unless visible?(options)
 
-      item = Navigasmic::Item.new(self, label, extract_and_determine_link(label, options, *args), options)
+      item = Navigasmic::Item.new(label, extract_and_determine_link(label, options, *args), visible?(options), options)
 
       merge_classes!(options, @config.disabled_class) if item.disabled?
       merge_classes!(options, @config.highlighted_class) if item.highlights_on?(@context.request.path, @context.params)
