@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   # General Gem Information
   s.name        = 'navigasmic'
-  s.date        = '2012-09-14'
+  s.date        = '2012-09-20'
   s.version     = Navigasmic::VERSION
   s.authors     = ['Jeremy Jackson']
   s.email       = ['jejacks0n@gmail.com']
