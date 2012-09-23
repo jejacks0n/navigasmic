@@ -237,6 +237,9 @@ that's pretty easy to style and work with.
   - `wrapper_class` -
     *String*: The classname that will be applied to the top level element.
     Default: `'semantic-navigation'`
+  - `item_class` -
+    *String*: The classname that will be applied to any item by default.
+    Default: `nil`
   - `has_nested_class` -
     *String*: The classname that will be applied to any group (or item with nested items).
     Default: `'with-group'`
@@ -251,10 +254,10 @@ that's pretty easy to style and work with.
     Default: `'active'`
   - `label_generator` -
     *Proc*: Called when inserting labels into items or groups.
-    Default: `proc{ |label, has_link, has_nested| "<span>#{label}</span>" }`
+    Default: `proc{ |label, options, has_link, has_nested| "<span>#{label}</span>" }`
   - `link_generator` -
     *Proc*: Called when generating links.
-    Default: `proc{ |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }`
+    Default: `proc{ |label, link, link_options, is_nested| link_to(label, link, options.delete(:link_html)) }`
 
 ### MapBuilder Options
 

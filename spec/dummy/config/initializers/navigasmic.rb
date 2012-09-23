@@ -2,17 +2,14 @@ Navigasmic.setup do |config|
 
   # Defining Navigation Structures:
   #
-  # You can begin by defining your navigation structures here.  You can also define them directly in the view if you'd
-  # like, but it's recommended to eventually move them here to clean help up your views.  You can read about Navigasmic
-  # at https://github.com/jejacks0n/navigasmic
+  # You can define your navigation structures and configure the builders in this initializer.
   #
-  # When you're defining navigation here, it's basically the same as if you were doing it in the view but the scope is
-  # different.  It's important to understand that -- and use procs where you want things to execute in the view scope.
+  # When defining navigation here, it's important to understand that the scope is not the same as the view scope -- and
+  # you should use procs where you want things to execute in the view scope.
   #
   # Once you've defined some navigation structures and configured your builders you can render navigation in your views
   # using the `semantic_navigation` view helper.  You can also use the same syntax to define your navigation structures
-  # in your views, and eventually move them here (it's handy to prototype navigation/css by putting them in the views
-  # first).
+  # in your views -- and eventually move them here if you want.
   #
   # <%= semantic_navigation :primary %>
   #
@@ -21,7 +18,7 @@ Navigasmic.setup do |config|
   # <%= semantic_navigation :primary, config: :blockquote %>
   # <%= semantic_navigation :primary, builder: Navigasmic::Builder::MapBuilder %>
   #
-  # When defining navigation in your views just pass it a block (the same as here basically).
+  # When defining navigation in your views just pass it a block.
   #
   # <%= semantic_navigation :primary do |n| %>
   #   <% n.item 'About Me' %>
@@ -34,9 +31,9 @@ Navigasmic.setup do |config|
 
     # Groups and Items:
     #
-    # You can create a structure using `group`, and `item`.  You can nest items inside groups or items.  In the
-    # following example, the "Articles" item will always highlight on the blog/posts controller, and the nested article
-    # items will only highlight when on those specific pages.  The "Links" item will be disabled unless the user is
+    # Create navigation structures using the `group`, and `item` methods.  You can nest items inside groups or items.
+    # In the following example, the "Articles" item will always highlight on the blog/posts controller, and the nested
+    # article items will only highlight on those specific pages.  The "Links" item will be disabled unless the user is
     # logged in.
     #
     #n.group 'Blog' do
@@ -47,11 +44,11 @@ Navigasmic.setup do |config|
     #  n.item 'Links', controller: '/blog/links', disabled_if: proc{ !logged_in? }
     #end
     #
-    # You can hide specific specific items or groups.  Here we specify that the "About" section of navigation should
+    # You can hide specific specific items or groups, and here we specify that the "Admin" section of navigation should
     # only be displayed if the user is logged in.
     #
-    #n.group 'About', hidden_unless: proc{ logged_in? } do
-    #  n.item 'About Me', class: 'featured', link_html: {class: 'about-me'}
+    #n.group 'Admin', hidden_unless: proc{ logged_in? } do
+    #  n.item 'Manage Posts', class: 'posts', link_html: {data: {tools: 'posts'}}
     #end
     #
     # Scoping:
@@ -85,16 +82,16 @@ Navigasmic.setup do |config|
   # want to change.
   #
   # Changing the default ListBuilder options:
-  config.builder Navigasmic::Builder::ListBuilder do |builder|
-    builder.wrapper_class = 'semantic-navigation'
-  end
+  #config.builder Navigasmic::Builder::ListBuilder do |builder|
+  #  builder.wrapper_class = 'semantic-navigation'
+  #end
 
 
   # Naming Builder Configurations:
   #
-  # If you want to define a named configuration for a builder, just provide a hash with the name, and the builder to
+  # If you want to define a named configuration for a builder, just provide a hash with the name and the builder to
   # configure.  The named configurations can then be used during rendering by specifying a `:config => :bootstrap`
-  # option to the `semantic_navigation` view helper.
+  # option.
   #
   # A Twitter Bootstrap configuration:
   #
@@ -103,6 +100,7 @@ Navigasmic.setup do |config|
   # <%= semantic_navigation :primary, config: :bootstrap, class: 'nav-pills' %>
   #
   # Or to create a full navigation bar using twitter bootstrap you could use the following in your view:
+  #
   # <div class="navbar">
   #   <div class="navbar-inner">
   #     <a class="brand" href="/">Title</a>
@@ -121,7 +119,7 @@ Navigasmic.setup do |config|
 
     # For dropdowns to work you'll need to include the bootstrap dropdown js
     # For groups, we adjust the markup so they'll be clickable and be picked up by the javascript.
-    builder.label_generator = proc do |label, has_link, has_nested|
+    builder.label_generator = proc do |label, options, has_link, has_nested|
       if !has_nested || has_link
         "<span>#{label}</span>"
       else
@@ -131,13 +129,13 @@ Navigasmic.setup do |config|
 
     # For items, we adjust the links so they're '#', and do the same as for groups.  This allows us to use more complex
     # highlighting rules for dropdowns.
-    builder.link_generator = proc do |label, link, options, has_nested|
+    builder.link_generator = proc do |label, link, link_options, has_nested|
       if has_nested
         link = '#'
         label << "<b class='caret'></b>"
         options.merge!(class: 'dropdown-toggle', data: {toggle: 'dropdown'})
       end
-      link_to(label, link, options)
+      link_to(label, link, link_options)
     end
 
   end

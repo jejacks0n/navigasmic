@@ -82,9 +82,9 @@ Navigasmic.setup do |config|
   # want to change.
   #
   # Changing the default ListBuilder options:
-  config.builder Navigasmic::Builder::ListBuilder do |builder|
-    builder.wrapper_class = 'semantic-navigation'
-  end
+  #config.builder Navigasmic::Builder::ListBuilder do |builder|
+  #  builder.wrapper_class = 'semantic-navigation'
+  #end
 
 
   # Naming Builder Configurations:
@@ -119,7 +119,7 @@ Navigasmic.setup do |config|
 
     # For dropdowns to work you'll need to include the bootstrap dropdown js
     # For groups, we adjust the markup so they'll be clickable and be picked up by the javascript.
-    builder.label_generator = proc do |label, has_link, has_nested|
+    builder.label_generator = proc do |label, options, has_link, has_nested|
       if !has_nested || has_link
         "<span>#{label}</span>"
       else
@@ -129,13 +129,13 @@ Navigasmic.setup do |config|
 
     # For items, we adjust the links so they're '#', and do the same as for groups.  This allows us to use more complex
     # highlighting rules for dropdowns.
-    builder.link_generator = proc do |label, link, options, has_nested|
+    builder.link_generator = proc do |label, link, link_options, has_nested|
       if has_nested
         link = '#'
         label << "<b class='caret'></b>"
         options.merge!(class: 'dropdown-toggle', data: {toggle: 'dropdown'})
       end
-      link_to(label, link, options)
+      link_to(label, link, link_options)
     end
 
   end

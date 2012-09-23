@@ -2,7 +2,7 @@ module Navigasmic::Builder
   class ListBuilder < Base
     class Configuration < Base::Configuration
 
-      attr_accessor :wrapper_class, :has_nested_class, :is_nested_class, :disabled_class, :highlighted_class
+      attr_accessor :wrapper_class, :item_class, :has_nested_class, :is_nested_class, :disabled_class, :highlighted_class
       attr_accessor :wrapper_tag, :group_tag, :item_tag
       attr_accessor :link_generator, :label_generator
 
@@ -17,6 +17,7 @@ module Navigasmic::Builder
 
         # class configurations
         @wrapper_class = 'semantic-navigation'
+        @item_class = nil
         @has_nested_class = 'has-nested'
         @is_nested_class = 'is-nested'
         @disabled_class = 'disabled'
@@ -58,6 +59,7 @@ module Navigasmic::Builder
 
       item = Navigasmic::Item.new(label, extract_and_determine_link(label, options, *args), visible?(options), options)
 
+      merge_classes!(options, @config.item_class)
       merge_classes!(options, @config.disabled_class) if item.disabled?
       merge_classes!(options, @config.highlighted_class) if item.highlights_on?(@context.request.path, @context.params)
 
@@ -80,13 +82,14 @@ module Navigasmic::Builder
 
     def label_for(label, link, is_nested = false, options = {})
       if label.present?
-        label = @context.instance_exec(label, !!link, is_nested, &@config.label_generator).html_safe
+        label = @context.instance_exec(label, options, !!link, is_nested, &@config.label_generator).html_safe
       end
       label = @context.instance_exec(label, link, options.delete(:link_html) || {}, is_nested, &@config.link_generator).html_safe if link
       label
     end
 
     def merge_classes!(hash, classname)
+      return if classname.blank?
       hash[:class] = (hash[:class] ? "#{hash[:class]} " : '') << classname
     end
 
