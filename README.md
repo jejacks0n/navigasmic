@@ -182,7 +182,7 @@ Highlight rules allows for passing an array containing any of/or a Boolean, Stri
 following examples will highlight:
 
     n.item 'On the /my_thoughts path, and on Mondays', '/blog/posts', highlights_on: ['/my_thoughts', proc{ Time.now.wday == 1}]
-    n.item 'On any action in BlogController', highlights_on: {controller: 'blog'}
+    n.item 'On any action in BlogController', highlights_on: [{controller: 'blog'}]
     n.item 'On any path beginning with "my_"', highlights_on: /^\/my_/
     n.item 'Only on "/my_thoughts"', highlights_on: '/my_thoughts'
     n.item 'When the highlight param is set', highlights_on: proc{ params[:highlight].present? }
