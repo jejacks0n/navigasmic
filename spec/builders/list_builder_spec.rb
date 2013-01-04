@@ -62,5 +62,23 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
 
       builder.render.should match(clean(html))
     end
+
+    it "handles link_html of items" do
+      builder = subject.new helper, :primary, {} do |n|
+        n.item('Level 1', 'level1.html', class: 'item', link_html: {class: "dialog"})
+      end
+
+      html = <<-HTML
+        <ul class="semantic-navigation" id="primary">
+          <li class="item">
+            <a href="level1.html" class="dialog">
+              <span>Level 1</span>
+            </a>
+          </li>
+        </ul>
+      HTML
+
+      builder.render.should match(clean(html))
+    end
   end
 end

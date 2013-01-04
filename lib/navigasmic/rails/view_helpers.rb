@@ -10,7 +10,11 @@ module Navigasmic::ViewHelpers
   #     <% end %>
   #   <% end %>
   def semantic_navigation(name, options = {}, &block)
-
+    if name.is_a?(Hash)
+      options = name
+      options[:id] ||= nil
+      name = ""
+    end
     builder = options.delete(:builder) || Navigasmic.configuration.default_builder
     builder.new(self, name, options, &block).render
   end
