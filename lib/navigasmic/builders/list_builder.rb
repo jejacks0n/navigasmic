@@ -24,7 +24,7 @@ module Navigasmic::Builder
         @highlighted_class = 'active'
 
         # generator callbacks
-        @link_generator = proc{ |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }
+        @link_generator = proc{ |label, link, options, is_nested| link_to(label, link, options) }
         @label_generator = proc{ |label, is_linked, is_nested| "<span>#{label}</span>" }
 
         super

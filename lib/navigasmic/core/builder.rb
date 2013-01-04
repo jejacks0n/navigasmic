@@ -100,8 +100,12 @@ module Navigasmic::Builder
         @context.send(path_helper) if @context.respond_to?(path_helper)
       elsif link.is_a?(Proc)
         eval_in_context(&link)
-      else
+      elsif link.is_a?(String)
         link
+      elsif link.is_a?(Hash)
+        link
+      else
+        url_for(link)
       end
     end
 
