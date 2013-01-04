@@ -2,3 +2,4 @@ pkg
 .rvmrc
 spec/dummy/tmp
 spec/dummy/log/*.log
+Gemfile.lock
