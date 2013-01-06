@@ -41,7 +41,7 @@ class Navigasmic::Item
         else raise 'highlighting rules should be an array containing any of/or a Boolean, String, Regexp, Hash or Proc'
       end
 
-      result |= highlighted
+      result &= highlighted
     end
 
     result
