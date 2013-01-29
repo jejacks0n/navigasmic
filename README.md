@@ -75,7 +75,6 @@ for instance), and the second is via a global configuration (similar to how [sim
 
     config.semantic_navigation :primary do |n|
       n.group 'Blog', class: 'blog' do
-        '<li>Custom Node</li>'.html_safe
         n.item 'Articles', controller: '/blog/posts'
         n.item 'Links', controller: '/blog/links'
       end
