@@ -86,5 +86,11 @@ describe Navigasmic::Item do
       item.highlights_on?('/path', {}).should be(false)
       item.highlights_on?('/other_path', {}).should be(false)
     end
+
+    it "leaves controller paths alone (bug fix)" do
+      item = subject.new 'Label', {controller: '/foo'}, true
+      item.highlights_on?('/path', {})
+      item.link.should == {controller: '/foo'}
+    end
   end
 end
