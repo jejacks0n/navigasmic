@@ -35,7 +35,7 @@ class Navigasmic::Item
         when FalseClass then highlighted &= rule
         when Hash
           clean_unwanted_keys(rule).each do |key, value|
-            value.gsub!(/^\//, '') if key == :controller
+            value.gsub(/^\//, '') if key == :controller
             highlighted &= value == params[key].to_s
           end
         else raise 'highlighting rules should be an array containing any of/or a Boolean, String, Regexp, Hash or Proc'
