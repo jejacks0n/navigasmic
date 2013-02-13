@@ -50,11 +50,13 @@ class Navigasmic::Item
   private
 
   def calculate_highlighting_rules(rules)
-    highlighting_rules = []
-    highlighting_rules << @link if link?
-
-    return [] if highlighting_rules.blank?
-    highlighting_rules += Array(rules)
+    [].tap do |highlighting_rules|
+      if rules
+        highlighting_rules.concat Array(rules)
+      else
+        highlighting_rules << @link if link?
+      end
+    end
   end
 
   def clean_unwanted_keys(hash)
