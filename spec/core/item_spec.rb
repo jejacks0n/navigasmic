@@ -5,7 +5,6 @@ describe Navigasmic::Item do
   subject { Navigasmic::Item }
 
   describe "#hidden?" do
-
     it "returns true when it's not visible" do
       item = subject.new 'Label', {controller: 'controller'}, false
       item.hidden?.should be(true)
@@ -15,11 +14,9 @@ describe Navigasmic::Item do
       item = subject.new 'Label', {controller: 'controller'}, true
       item.hidden?.should be(false)
     end
-
   end
 
   describe "#disabled?" do
-
     it "returns true when it's disabled" do
       item = subject.new 'Label', {controller: 'controller'}, true, disabled_if: true
       item.disabled?.should be(true)
@@ -29,11 +26,9 @@ describe Navigasmic::Item do
       item = subject.new 'Label', {controller: 'controller'}, true, disabled_if: false
       item.disabled?.should be(false)
     end
-
   end
 
   describe "#link?" do
-
     it "returns true when there's a link" do
       item = subject.new 'Label', 'url', true
       item.link?.should be(true)
@@ -48,11 +43,24 @@ describe Navigasmic::Item do
       item = subject.new 'Label', nil, true, disabled_if: true
       item.link?.should be(false)
     end
+  end
 
+  describe "#calculate_highlighting_rules" do
+    it "uses the item's link when no rules given" do
+      item = subject.new 'Label', 'url', true
+      item.send(:calculate_highlighting_rules, nil).should eq(['url'])
+    end
+
+    it "uses the given rules if any given" do
+      item = subject.new 'Label', 'url', true, :highlights_on => false
+      item.send(:calculate_highlighting_rules, false).should eq([false])
+
+      item = subject.new 'Label', 'url', true, :highlights_on => false
+      item.send(:calculate_highlighting_rules, ["/a", "/b"]).should eq(["/a", "/b"])
+    end
   end
 
   describe "#highlights_on?" do
-
     it "uses it's own link (as a string)" do
       item = subject.new 'Label', '/path', true
       item.highlights_on?('/path', {}).should be(true)
