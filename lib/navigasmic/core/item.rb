@@ -50,10 +50,10 @@ class Navigasmic::Item
 
   def calculate_highlighting_rules(rules)
     [].tap do |highlighting_rules|
-      if rules
-        highlighting_rules.concat Array(rules)
-      else
+      if rules.nil?
         highlighting_rules << @link if link?
+      else
+        highlighting_rules.concat Array(rules)
       end
     end
   end
