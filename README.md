@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/jejacks0n/navigasmic.png)](http://travis-ci.org/jejacks0n/navigasmic)
 [![Dependency Status](https://gemnasium.com/jejacks0n/navigasmic.png)](https://gemnasium.com/jejacks0n/navigasmic)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/jejacks0n/navigasmic)
+[![Code Climate](https://codeclimate.com/github/jejacks0n/navigasmic.png)](https://codeclimate.com/github/jejacks0n/navigasmic)
 
 Semantic navigation; a semantic way to build beautifully simple navigation structures in Rails views or configuration.
 
