@@ -42,13 +42,15 @@ These where the core goals:
 
 And working with [gvarela](https://github.com/gvarela) at the time, we wrote a DSL that met those requirements:
 
-    semantic_navigation :primary do |n|
-      n.group 'Blog' do
-        n.item 'Articles', '/blog/posts', highlights_on: '/my_awesome_blog'
-        n.item 'Links', '/blog/links', disabled_if: proc { !logged_in? }
-        n.item 'My Portfolio' # auto links to the my_portfolio_path if it exists
-      end
-    end
+```ruby
+semantic_navigation :primary do |n|
+  n.group 'Blog' do
+    n.item 'Articles', '/blog/posts', highlights_on: '/my_awesome_blog'
+    n.item 'Links', '/blog/links', disabled_if: proc { !logged_in? }
+    n.item 'My Portfolio' # auto links to the my_portfolio_path if it exists
+  end
+end
+```
 
 Since we wanted something that allowed for customization we ended up using the Builder Pattern -- the way Rails uses
 form builders basically.  There are some builders that are provided, and these builders can be configured, extended or
@@ -59,12 +61,15 @@ replaced if you need more custom markup -- there's more on how to do that stuff 
 
 Include the gem in your Gemfile and bundle to install the gem.  (Navigasmic requires Ruby 1.9+)
 
-    gem 'navigasmic'
+```ruby
+gem 'navigasmic'
+```
 
 You can also get the initializer by running the install generator.
 
-    rails generate navigasmic:install
-
+```bash
+rails generate navigasmic:install
+```
 
 ## Usage
 
@@ -73,16 +78,18 @@ for instance), and the second is via a global configuration (similar to how [sim
 
 ### Defining Navigation in Initializer
 
-    config.semantic_navigation :primary do |n|
-      n.group 'Blog', class: 'blog' do
-        n.item 'Articles', controller: '/blog/posts'
-        n.item 'Links', controller: '/blog/links'
-      end
-      n.group 'Info' do
-        n.item 'Me', '/about', title: 'The Awesomeness That Is'
-        n.item 'My Portfolio'
-      end
-    end
+```ruby
+config.semantic_navigation :primary do |n|
+  n.group 'Blog', class: 'blog' do
+    n.item 'Articles', controller: '/blog/posts'
+    n.item 'Links', controller: '/blog/links'
+  end
+  n.group 'Info' do
+    n.item 'Me', '/about', title: 'The Awesomeness That Is'
+    n.item 'My Portfolio'
+  end
+end
+```
 
 ### Rendering Navigation (based on navigation defined in initializer)
 
@@ -90,7 +97,9 @@ The `semantic_navigation` method in Navigasmic provides a single name for defini
 use this method in your layouts, views, and partials to render navigation structures that you've defined in the
 initializer.
 
-    <%= semantic_navigation :primary, class: 'my-navigation' %>
+```erb
+<%= semantic_navigation :primary, class: 'my-navigation' %>
+```
 
 ### Definition Navigation / Rendering in Views
 
@@ -100,28 +109,32 @@ passing it a block you're able to define the navigation structure easily and qui
 
 **ERB**
 
-    <%= semantic_navigation :primary, builder: Navigasmic::Builder::ListBuilder, class: 'my-navigation' do |n| %>
-      <% n.group 'Blog', class: 'blog' do %>
-        <li>Custom Node</li>
-        <% n.item 'Articles', controller: '/blog/posts' %>
-        <% n.item 'Links', controller: '/blog/links' %>
-      <% end %>
-      <% n.group 'Info' do
-           n.item 'Me', '/about', title: 'The Awesomeness That Is'
-           n.item 'My Portfolio'
-         end %>
-    <% end %>
+```erb
+<%= semantic_navigation :primary, builder: Navigasmic::Builder::ListBuilder, class: 'my-navigation' do |n| %>
+  <% n.group 'Blog', class: 'blog' do %>
+    <li>Custom Node</li>
+    <% n.item 'Articles', controller: '/blog/posts' %>
+    <% n.item 'Links', controller: '/blog/links' %>
+  <% end %>
+  <% n.group 'Info' do
+       n.item 'Me', '/about', title: 'The Awesomeness That Is'
+       n.item 'My Portfolio'
+     end %>
+<% end %>
+```
 
 **HAML**
 
-    = semantic_navigation :primary, config: :bootstrap, class: 'my-navigation' do |n|
-      - n.group 'Blog', class: 'blog' do
-        %li Custom Node
-        - n.item 'Articles', controller: '/blog/posts'
-        - n.item 'Links', controller: '/blog/links'
-      - n.group 'Info' do
-        - n.item 'Me', '/about', title: 'The Awesomeness That Is'
-        - n.item 'My Portfolio'
+```haml
+= semantic_navigation :primary, config: :bootstrap, class: 'my-navigation' do |n|
+  - n.group 'Blog', class: 'blog' do
+    %li Custom Node
+    - n.item 'Articles', controller: '/blog/posts'
+    - n.item 'Links', controller: '/blog/links'
+  - n.group 'Info' do
+    - n.item 'Me', '/about', title: 'The Awesomeness That Is'
+    - n.item 'My Portfolio'
+```
 
 ### Configuring
 
@@ -154,17 +167,21 @@ You can pass links to the `item` method in a few ways.  You can just provide a c
 options, you can pass a first argument, or you can explicitly call out what the link options are.  Here are some
 examples:
 
-    n.item 'Articles', controller: '/blog/posts', class: 'featured'
-    n.item 'Articles', controller: '/blog/posts', action: 'index', class: 'featured'
-    n.item 'Articles', '/blog/posts', class: 'featured'
-    n.item 'Articles', {controller: '/blog/posts'}, class: 'featured'
-    n.item 'Articles', class: 'featured', link: {controller: '/blog/posts'}
+```ruby
+n.item 'Articles', controller: '/blog/posts', class: 'featured'
+n.item 'Articles', controller: '/blog/posts', action: 'index', class: 'featured'
+n.item 'Articles', '/blog/posts', class: 'featured'
+n.item 'Articles', {controller: '/blog/posts'}, class: 'featured'
+n.item 'Articles', class: 'featured', link: {controller: '/blog/posts'}
+```
 
 You can take this much further by matching specific url options.  Here's some examples that would match to specific
 blog posts (they will also only highlight on the given record):
 
-    n.item 'Article', {controller: '/blog/posts', action: 'show', id: '42'},
-    n.item 'Article', class: 'featured', link: {controller: '/blog/posts', action: 'show', id: '42'}
+```ruby
+n.item 'Article', {controller: '/blog/posts', action: 'show', id: '42'},
+n.item 'Article', class: 'featured', link: {controller: '/blog/posts', action: 'show', id: '42'}
+```
 
 Note that we're passing a string for the posts id.. That's because when the param comes in and is compared against the
 link options you provided, the types need to match.
@@ -173,36 +190,44 @@ If you don't provide a link, Navigasmic attempts to find a path helper from the 
 only provide the label, but if I've defined a route (eg. `match '/portfolio' => 'portfolio#index', as: 'my_portfolio'`)
 it will automatically use the `my_porfolio_path' path helper.
 
-    n.item 'My Portfolio' # Yeah auto link!
+```ruby
+n.item 'My Portfolio' # Yeah auto link!
+```
 
 #### Setting highlighted / active states
 
 Highlight rules allows for passing an array containing any of/or a Boolean, String, Regexp, Hash or Proc.  The
 following examples will highlight:
 
-    n.item 'On the /my_thoughts path, and on Mondays', '/blog/posts', highlights_on: ['/my_thoughts', proc{ Time.now.wday == 1}]
-    n.item 'On any action in BlogController', highlights_on: [{controller: 'blog'}]
-    n.item 'On any path beginning with "my_"', highlights_on: /^\/my_/
-    n.item 'Only on "/my_thoughts"', highlights_on: '/my_thoughts'
-    n.item 'When the highlight param is set', highlights_on: proc{ params[:highlight].present? }
+```ruby
+n.item 'On the /my_thoughts path, and on Mondays', '/blog/posts', highlights_on: ['/my_thoughts', proc{ Time.now.wday == 1}]
+n.item 'On any action in BlogController', highlights_on: [{controller: 'blog'}]
+n.item 'On any path beginning with "my_"', highlights_on: /^\/my_/
+n.item 'Only on "/my_thoughts"', highlights_on: '/my_thoughts'
+n.item 'When the highlight param is set', highlights_on: proc{ params[:highlight].present? }
+```
 
 #### Disabling
 
 Disable rules allow for you to pass a Boolean or Proc.  The following examples will be disabled:
 
-    n.item 'On Tuesdays, and when not logged in', disabled_if: proc{ Time.now.wday == 2 || !logged_in? }
-    n.item 'Never', disabled_if: false
-    n.item 'Always', disabled_if: true
+```ruby
+n.item 'On Tuesdays, and when not logged in', disabled_if: proc{ Time.now.wday == 2 || !logged_in? }
+n.item 'Never', disabled_if: false
+n.item 'Always', disabled_if: true
+```
 
 #### Hiding
 
 Hide rules allow for you to pass a Boolean or Proc.  The following examples will be hidden:
 
-    n.group 'On Tuesdays, and when not logged in', hidden_unless: proc{ Time.now.wday != 2 && logged_in? } do
-      n.item 'When not logged in', hidden_unless: proc{ logged_in? }
-      n.item 'Never', hidden_unless: false
-      n.item 'Always', hidden_unless: true
-    end
+```ruby
+n.group 'On Tuesdays, and when not logged in', hidden_unless: proc{ Time.now.wday != 2 && logged_in? } do
+  n.item 'When not logged in', hidden_unless: proc{ logged_in? }
+  n.item 'Never', hidden_unless: false
+  n.item 'Always', hidden_unless: true
+end
+```
 
 
 ## Builders
@@ -277,8 +302,10 @@ The MapBuilder is used for generate XML sitemaps that follow the protocol laid o
 
 A simple example of using the MapBuilder -- create a `[action].xml.builder` view, and add the following:
 
-    xml.instruct!
-    xml << semantic_navigation(:primary, builder: Navigasmic::Builder::MapBuilder)
+```ruby
+xml.instruct!
+xml << semantic_navigation(:primary, builder: Navigasmic::Builder::MapBuilder)
+```
 
 
 ## License
@@ -289,3 +316,4 @@ Copyright 2012 [Jeremy Jackson](https://github.com/jejacks0n)
 
 
 ## Enjoy =)
+
