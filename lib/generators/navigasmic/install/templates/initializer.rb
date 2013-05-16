@@ -133,7 +133,7 @@ Navigasmic.setup do |config|
       if has_nested
         link = '#'
         label << "<b class='caret'></b>"
-        options.merge!(class: 'dropdown-toggle', data: {toggle: 'dropdown'})
+        link_options.merge!(class: 'dropdown-toggle', data: {toggle: 'dropdown'})
       end
       link_to(label, link, link_options)
     end
