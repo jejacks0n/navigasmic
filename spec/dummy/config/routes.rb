@@ -2,7 +2,7 @@ Dummy::Application.routes.draw do
 
   root to: 'application#welcome'
 
-  match '/my_awesome_blog' => 'blog/posts#index', as: :my_awesome_blog
+  get '/my_awesome_blog' => 'blog/posts#index', as: :my_awesome_blog
   namespace :blog do
     resources :posts
     resources :links

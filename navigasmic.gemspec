@@ -16,9 +16,7 @@ Gem::Specification.new do |s|
   s.licenses    = ['MIT']
 
   # Testing dependencies
-  s.add_dependency 'railties', '~> 3.2'
-
-  # Testing dependencies
+  s.add_development_dependency 'railties', '~> 4.0'
   s.add_development_dependency 'rspec-rails'
 
   # Gem Files

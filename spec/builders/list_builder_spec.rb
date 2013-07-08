@@ -45,13 +45,13 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
       html = <<-HTML
         <ul class="nav nav-pills" id="primary">
           <li class="group dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Group<b class='caret'></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Group<b class='caret'></b></a>
             <ul class="dropdown-menu">
               <li><a href="/path"><span>Label</span></a></li>
             </ul>
           </li>
           <li class="item dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 1<b class='caret'></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Level 1<b class='caret'></b></a>
             <ul class="dropdown-menu">
               <li><span>Level 2</span></li>
             </ul>
@@ -71,7 +71,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
       html = <<-HTML
         <ul class="semantic-navigation" id="primary">
           <li class="item">
-            <a href="level1.html" class="dialog">
+            <a class="dialog" href="level1.html">
               <span>Level 1</span>
             </a>
           </li>
