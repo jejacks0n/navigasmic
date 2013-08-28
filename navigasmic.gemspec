@@ -15,10 +15,6 @@ Gem::Specification.new do |s|
   s.description = %Q{Use semantic structures to to build beautifully simple navigation structures in Rails}
   s.licenses    = ['MIT']
 
-  # Testing dependencies
-  s.add_development_dependency 'railties', '~> 4.0'
-  s.add_development_dependency 'rspec-rails'
-
   # Gem Files
   s.extra_rdoc_files  = %w(LICENSE)
   # = MANIFEST =
