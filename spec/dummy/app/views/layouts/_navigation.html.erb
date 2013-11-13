@@ -49,6 +49,7 @@
     <% n.item 'When on any path beginning with "my_aw" (using regexp)', highlights_on: [/^\/my_aw/] %>
     <% n.item 'When on "/my_awesome_blog" (using string)', highlights_on: ['/my_awesome_blog'] %>
     <% n.item 'When on any action in the application controller', highlights_on: [{controller: 'application'}] %>
+    <% n.item 'When on any action in the blog/posts or blog/links controller', highlights_on: [{controller: 'blog/posts'}, {controller: 'blog/links'}] %>
   <% end %>
 
   <!-- Examples of disabling items -->
