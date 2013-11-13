@@ -23,7 +23,7 @@ class Navigasmic::Item
 
   def highlights_on?(path, params)
     return false unless @rules.any?
-    params = clean_unwanted_keys(params)
+    params = params.except(*unwanted_keys)
     !!@rules.detect do |rule|
       case rule
       when String
@@ -35,7 +35,7 @@ class Navigasmic::Item
       when FalseClass
         false
       when Hash
-        clean_unwanted_keys(rule).detect do |key, value|
+        rule.except(*unwanted_keys).detect do |key, value|
           value.gsub(/^\//, '') if key == :controller
           value == params[key].to_s
         end
@@ -57,9 +57,7 @@ class Navigasmic::Item
     end
   end
 
-  def clean_unwanted_keys(hash)
-    ignored_keys = [:only_path, :use_route]
-    hash.dup.delete_if { |key, value| ignored_keys.include?(key) }
+  def unwanted_keys
+    [:only_path, :use_routes]
   end
-
 end
