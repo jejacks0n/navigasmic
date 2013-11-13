@@ -42,13 +42,13 @@
   <% end %>
 
   <% n.group 'Highlighting under various situations' do %>
-    <% n.item 'When the highlight param is set', highlights_on: params[:highlight].present? %>
+    <% n.item 'When the highlight param is set', highlights_on: [params[:highlight].present?] %>
     <% n.item 'Always (using an array)', highlights_on: [true, false, false] %>
     <% n.item 'When the highlight param is set (using a proc)', highlights_on: proc{ params[:highlight].present? } %>
     <% n.item 'When the highlight param is set (using a proc in an array)', highlights_on: [proc{ params[:highlight].present? }] %>
     <% n.item 'When on any path beginning with "my_aw" (using regexp)', highlights_on: [/^\/my_aw/] %>
-    <% n.item 'When on "/my_awesome_blog" (using string)', highlights_on: '/my_awesome_blog' %>
-    <% n.item 'When on any action in the application controller', highlights_on: {controller: 'application'} %>
+    <% n.item 'When on "/my_awesome_blog" (using string)', highlights_on: ['/my_awesome_blog'] %>
+    <% n.item 'When on any action in the application controller', highlights_on: [{controller: 'application'}] %>
   <% end %>
 
   <!-- Examples of disabling items -->
