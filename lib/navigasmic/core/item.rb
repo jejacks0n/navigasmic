@@ -36,7 +36,7 @@ class Navigasmic::Item
         false
       when Hash
         rule.except(*unwanted_keys).detect do |key, value|
-          value.gsub(/^\//, '') if key == :controller
+          value = value.gsub(/^\//, '') if key == :controller
           value == params[key].to_s
         end
       else
