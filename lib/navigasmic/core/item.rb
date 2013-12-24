@@ -23,27 +23,26 @@ class Navigasmic::Item
 
   def highlights_on?(path, params)
     return false unless @rules.any?
-    params = clean_unwanted_keys(params)
-    @rules.each do |rule|
+    params = params.except(*unwanted_keys)
+    !!@rules.detect do |rule|
       case rule
       when String
-        return false unless path == rule
+        path == rule
       when Regexp
-        return false unless path.match(rule)
+        path.match(rule)
       when TrueClass
-        # no-op
+        true
       when FalseClass
-        return false
+        false
       when Hash
-        clean_unwanted_keys(rule).each do |key, value|
-          value.gsub(/^\//, '') if key == :controller
-          return false unless value == params[key].to_s
+        rule.except(*unwanted_keys).detect do |key, value|
+          value = value.gsub(/^\//, '') if key == :controller
+          value == params[key].to_s
         end
       else
         raise ArgumentError, 'Highlighting rules should be an array containing any of/or a Boolean, String, Regexp, Hash or Proc'
       end
     end
-    true
   end
 
   private
@@ -58,9 +57,7 @@ class Navigasmic::Item
     end
   end
 
-  def clean_unwanted_keys(hash)
-    ignored_keys = [:only_path, :use_route]
-    hash.dup.delete_if { |key, value| ignored_keys.include?(key) }
+  def unwanted_keys
+    [:only_path, :use_routes]
   end
-
 end

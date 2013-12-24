@@ -73,6 +73,13 @@ describe Navigasmic::Item do
       item.highlights_on?('/other_path', {controller: 'bar'}).should be(false)
     end
 
+    it "highlights on multiple controllers" do
+      item = subject.new 'Label', '/foo', true, highlights_on: [{controller: 'foo'}, {controller: 'bar'}]
+      item.highlights_on?('/path', {controller: 'foo'}).should be(true)
+      item.highlights_on?('/other_path', {controller: 'bar'}).should be(true)
+      item.highlights_on?('/other_path_entirely', {controller: 'baz'}).should be(false)
+    end
+
     it "handles strings" do
       item = subject.new 'Label', '/foo', true, highlights_on: '/path'
       item.highlights_on?('/path', {}).should be(true)
