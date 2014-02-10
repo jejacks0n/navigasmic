@@ -140,4 +140,30 @@ Navigasmic.setup do |config|
 
   end
 
+
+  # Highly customized navigation configuration for simple semantic one-line menu.
+  #
+  # Example usage:
+  #
+  # <%= semantic_navigation :primary, config: :navi %>
+  #
+  # <nav>
+  #  <a class="active" href="#">Label</a>
+  #  ...
+  # </nav>
+  # 
+
+  config.builder navi: Navigasmic::Builder::ListBuilder do |builder|
+
+    builder.wrapper_tag = :nav
+    builder.wrapper_class = nil
+    builder.item_class = 'menu-link'
+    builder.highlighted_class = 'is-active'
+
+    builder.label_generator = proc{ |label, options, has_link, has_nested| "#{label}" }
+    builder.link_generator = proc{ |label, link, options, is_nested| label }
+    builder.item_generator = proc{ |label, link, content, options, tag| link_to(label, link, options) }
+    
+  end
+
 end

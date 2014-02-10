@@ -35,7 +35,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
       builder.render.should match(clean(html))
     end
 
-    it "handles builder configurations" do
+    it "handles bootstrap builder configuration" do
       builder = subject.new helper, :primary, {config: :bootstrap} do |n|
         n.group('Group', class: 'group') { n.item "Label", '/path' }
         n.item('Level 1', class: 'item') { n.item 'Level 2' }
@@ -58,6 +58,24 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
           </li>
           <li><span>Foo</span></li>
         </ul>
+      HTML
+
+      builder.render.should match(clean(html))
+    end
+
+    it "handles navi builder configurations" do
+      builder = subject.new helper, :primary, {config: :navi} do |n|
+        n.item "Label", '/path' 
+        n.item 'Label 2', '/second_path' 
+        n.item 'Foo', '/foo'
+      end
+
+      html = <<-HTML
+        <nav id="primary">
+          <a class="menu-link" href="/path">Label</a>
+          <a class="menu-link" href="/second_path">Label 2</a>
+          <a class="menu-link" href="/foo">Foo</a>
+        </nav>
       HTML
 
       builder.render.should match(clean(html))

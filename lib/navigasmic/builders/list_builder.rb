@@ -4,7 +4,7 @@ module Navigasmic::Builder
 
       attr_accessor :wrapper_class, :item_class, :has_nested_class, :is_nested_class, :disabled_class, :highlighted_class
       attr_accessor :wrapper_tag, :group_tag, :item_tag
-      attr_accessor :link_generator, :label_generator
+      attr_accessor :link_generator, :label_generator, :item_generator
 
       def initialize
         # which keys (for other builder) should be removed from options
@@ -26,7 +26,7 @@ module Navigasmic::Builder
         # generator callbacks
         @link_generator = proc{ |label, link, options, is_nested| link_to(label, link, options) }
         @label_generator = proc{ |label, is_linked, is_nested| "<span>#{label}</span>" }
-
+        @item_generator = proc{ |label, link, content, options, tag| content_tag(tag,"#{label}#{content}".html_safe,options)}
         super
       end
     end
@@ -76,8 +76,8 @@ module Navigasmic::Builder
         merge_classes!(options, @config.has_nested_class)
         content = content_tag(@config.group_tag, capture(&block), {class: @config.is_nested_class})
       end
-
-      content_tag(@config.item_tag, "#{label}#{content}".html_safe, options)
+      
+      @context.instance_exec(label, link, content, options, @config.item_tag, &@config.item_generator).html_safe
     end
 
     def label_for(label, link, is_nested = false, options = {})
