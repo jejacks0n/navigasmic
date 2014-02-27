@@ -46,6 +46,8 @@ module Navigasmic::Builder
       if label_or_options.is_a?(Hash)
         options = label_or_options
         label_or_options = nil
+      elsif label_or_options.is_a?(Proc)
+        label_or_options = eval_in_context(&label_or_options)
       end
       return '' unless visible?(options)
 
@@ -56,6 +58,10 @@ module Navigasmic::Builder
       options = args.extract_options!
       options = flatten_and_eval_options(options)
       return '' unless visible?(options)
+      
+      if label.is_a?(Proc)
+        label = eval_in_context(&label)
+      end
 
       item = Navigasmic::Item.new(label, extract_and_determine_link(label, options, *args), visible?(options), options)
 
