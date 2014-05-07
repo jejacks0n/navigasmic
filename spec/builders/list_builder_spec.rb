@@ -40,6 +40,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
         n.group('Group', class: 'group') { n.item "Label", '/path' }
         n.item('Level 1', class: 'item') { n.item 'Level 2' }
         n.item('Foo')
+        n.group(n.proc{"Dynamic Group"}) { n.item n.proc{'Label 3'} }
       end
 
       html = <<-HTML
@@ -57,6 +58,12 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
             </ul>
           </li>
           <li><span>Foo</span></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dynamic Group<b class='caret'></b></a>
+            <ul class="dropdown-menu">
+              <li><span>Label 3</span></li>
+            </ul>
+          </li>
         </ul>
       HTML
 
