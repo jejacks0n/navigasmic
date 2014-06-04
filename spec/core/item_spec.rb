@@ -73,6 +73,12 @@ describe Navigasmic::Item do
       item.highlights_on?('/other_path', {controller: 'bar'}).should be(false)
     end
 
+    it "uses it's own path (as hash) with actions" do
+      item = subject.new 'Label', {controller: 'foo', action: 'baz'}, true
+      item.highlights_on?('/path/action', {controller: 'foo', action: 'baz'}).should be(true)
+      item.highlights_on?('/other_path/action', {controller: 'bar', action: 'baz'}).should be(false)
+    end
+
     it "highlights on multiple controllers" do
       item = subject.new 'Label', '/foo', true, highlights_on: [{controller: 'foo'}, {controller: 'bar'}]
       item.highlights_on?('/path', {controller: 'foo'}).should be(true)
