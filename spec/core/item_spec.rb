@@ -61,19 +61,19 @@ describe Navigasmic::Item do
   end
 
   describe "#highlights_on?" do
-    it "uses it's own link (as a string)" do
+    it "uses its own link (as a string)" do
       item = subject.new 'Label', '/path', true
       item.highlights_on?('/path', {}).should be(true)
       item.highlights_on?('/other_path', {}).should be(false)
     end
 
-    it "uses it's own path (as hash)" do
+    it "uses its own path (as hash)" do
       item = subject.new 'Label', {controller: 'foo'}, true
       item.highlights_on?('/path', {controller: 'foo'}).should be(true)
       item.highlights_on?('/other_path', {controller: 'bar'}).should be(false)
     end
 
-    it "uses it's own path (as hash) with actions" do
+    it "uses its own path (as hash) with actions" do
       item = subject.new 'Label', {controller: 'foo', action: 'baz'}, true
       item.highlights_on?('/path/action', {controller: 'foo', action: 'baz'}).should be(true)
       item.highlights_on?('/other_path/action', {controller: 'bar', action: 'baz'}).should be(false)
