@@ -25,7 +25,7 @@ describe 'Navigasmic::Builder::MapBuilder', type: :helper do
         </urlset>
       XML
 
-      builder.render.should match(clean(xml))
+      expect(builder.render).to match(clean(xml))
     end
 
     it "handles builder configurations" do
@@ -48,7 +48,7 @@ describe 'Navigasmic::Builder::MapBuilder', type: :helper do
         </urlset>
       XML
 
-      builder.render.should match(clean(xml))
+      expect(builder.render).to match(clean(xml))
     end
   end
 end

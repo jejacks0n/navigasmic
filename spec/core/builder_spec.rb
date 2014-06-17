@@ -7,7 +7,7 @@ describe 'Navigasmic::Builder::Base', type: :helper do
   describe "#group" do
 
     it "raises" do
-      lambda { subject.group }.should raise_error('Expected subclass to implement group')
+      expect { subject.group }.to raise_error('Expected subclass to implement group')
     end
 
   end
@@ -15,7 +15,7 @@ describe 'Navigasmic::Builder::Base', type: :helper do
   describe "#item" do
 
     it "raises" do
-      lambda { subject.item }.should raise_error('Expected subclass to implement item')
+      expect { subject.item }.to raise_error('Expected subclass to implement item')
     end
 
   end
@@ -23,7 +23,7 @@ describe 'Navigasmic::Builder::Base', type: :helper do
   describe "#render" do
 
     it "raises" do
-      lambda { subject.render }.should raise_error('Expected subclass to implement render')
+      expect { subject.render }.to raise_error('Expected subclass to implement render')
     end
 
   end

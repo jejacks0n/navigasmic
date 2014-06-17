@@ -32,7 +32,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
         </ul>
       HTML
 
-      builder.render.should match(clean(html))
+      expect(builder.render).to match(clean(html))
     end
 
     it "handles builder configurations" do
@@ -67,7 +67,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
         </ul>
       HTML
 
-      builder.render.should match(clean(html))
+      expect(builder.render).to match(clean(html))
     end
 
     it "handles link_html of items" do
@@ -85,7 +85,7 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
         </ul>
       HTML
 
-      builder.render.should match(clean(html))
+      expect(builder.render).to match(clean(html))
     end
   end
 end

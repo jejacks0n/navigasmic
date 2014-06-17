@@ -3,19 +3,19 @@ require 'spec_helper'
 describe Navigasmic do
 
   it "has a configuration property" do
-    Navigasmic.configuration.should be(Navigasmic::Configuration)
+    expect(Navigasmic.configuration).to be(Navigasmic::Configuration)
   end
 
   describe ".setup" do
 
     it "is defined" do
-      Navigasmic.methods.should include(:setup)
+      expect(Navigasmic.methods).to include(:setup)
     end
 
     it "yields configuration" do
       config = nil
       Navigasmic.setup { |c| config = c }
-      config.should be(Navigasmic::Configuration)
+      expect(config).to be(Navigasmic::Configuration)
     end
 
   end
@@ -25,32 +25,32 @@ describe Navigasmic do
     subject { Navigasmic::Configuration }
 
     it "sets the default_builder to ListBuilder" do
-      subject.default_builder.should be(Navigasmic::Builder::ListBuilder)
+      expect(subject.default_builder).to be(Navigasmic::Builder::ListBuilder)
     end
 
     it "allows configuring builders" do
-      subject.builder_configurations.should be_a(Hash)
-      subject.builder_configurations.should include('Navigasmic::Builder::ListBuilder')
+      expect(subject.builder_configurations).to be_a(Hash)
+      expect(subject.builder_configurations).to include('Navigasmic::Builder::ListBuilder')
 
       subject.builder test_config: Navigasmic::Builder::ListBuilder do
       end
 
-      subject.builder_configurations['Navigasmic::Builder::ListBuilder'].should include(:test_config)
-      subject.builder_configurations['Navigasmic::Builder::ListBuilder'][:test_config].should be_a(Proc)
+      expect(subject.builder_configurations['Navigasmic::Builder::ListBuilder']).to include(:test_config)
+      expect(subject.builder_configurations['Navigasmic::Builder::ListBuilder'][:test_config]).to be_a(Proc)
     end
 
     it "allows naming builder configurations" do
     end
 
     it "allows defining navigation structures" do
-      subject.definitions.should be_a(Hash)
-      subject.definitions.should include(:primary)
+      expect(subject.definitions).to be_a(Hash)
+      expect(subject.definitions).to include(:primary)
 
       subject.semantic_navigation :test_definition do
       end
 
-      subject.definitions.should include(:test_definition)
-      subject.definitions[:test_definition].should be_a(Proc)
+      expect(subject.definitions).to include(:test_definition)
+      expect(subject.definitions[:test_definition]).to be_a(Proc)
     end
   end
 end
