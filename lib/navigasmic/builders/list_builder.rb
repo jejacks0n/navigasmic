@@ -51,14 +51,14 @@ module Navigasmic::Builder
       end
       return '' unless visible?(options)
 
-      concat(structure_for(label_or_options, false, options, &block))
+      concat(structure_for(label_or_options, false, options.except(:hidden_unless), &block))
     end
 
     def item(label, *args, &block)
       options = args.extract_options!
       options = flatten_and_eval_options(options)
       return '' unless visible?(options)
-      
+
       if label.is_a?(Proc)
         label = eval_in_context(&label)
       end
