@@ -87,5 +87,24 @@ describe 'Navigasmic::Builder::ListBuilder', type: :helper do
 
       expect(builder.render).to match(clean(html))
     end
+
+    it "handles hidden_unless for groups" do
+      builder = subject.new helper, :primary, {} do |n|
+        n.group(hidden_unless: false) { n.item "Label", '/path' }
+        n.group(hidden_unless: true) { n.item "Label 2", '/path2' }
+      end
+
+      html = <<-HTML
+        <ul class="semantic-navigation" id="primary">
+          <li class="has-nested">
+            <ul class="is-nested">
+              <li><a href="/path2"><span>Label 2</span></a></li>
+            </ul>
+          </li>
+        </ul>
+      HTML
+
+      expect(builder.render).to match(clean(html))
+    end
   end
 end
