@@ -35,7 +35,7 @@ class Navigasmic::Item
       when FalseClass
         false
       when Hash
-        rule.except(*unwanted_keys).detect do |key, value|
+        rule.except(*unwanted_keys).all? do |key, value|
           value = value.gsub(/^\//, '') if key == :controller
           value == params[key].to_s
         end
