@@ -75,15 +75,22 @@ module Navigasmic::Builder
     private
 
     def structure_for(label, link = false, options = {}, &block)
-      label = label_for(label, link, block_given?, options)
-
       content = ''
+
       if block_given?
         merge_classes!(options, @config.has_nested_class)
         content = content_tag(@config.group_tag, capture(&block), {class: @config.is_nested_class})
       end
 
+      merge_classes!(options, 'active') if has_active_child?(content)
+      label = label_for(label, link, block_given?, options)
       content_tag(@config.item_tag, "#{label}#{content}".html_safe, options)
+    end
+
+    # FIXME: This is a very dirty, error-prone hack, because the groups and items are rendered directly to HTML!
+    # We should maintain something like a tree structure of groups and items that can really check upon active children.
+    def has_active_child?(content)
+      content =~ /<li class="active">/
     end
 
     def label_for(label, link, is_nested = false, options = {})
