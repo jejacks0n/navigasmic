@@ -1,7 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Navigasmic do
-
   it "is a module" do
     expect(Navigasmic).to be_a(Module)
   end
@@ -17,5 +16,4 @@ describe Navigasmic do
   it "includes ViewHelpers in ActionView::Base" do
     expect(ActionView::Base.new.methods).to include(:semantic_navigation)
   end
-
 end

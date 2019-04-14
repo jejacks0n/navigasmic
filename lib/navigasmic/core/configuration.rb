@@ -1,4 +1,4 @@
-require 'singleton'
+require "singleton"
 
 module Navigasmic
   class Configuration
@@ -32,7 +32,8 @@ module Navigasmic
   mattr_accessor :configuration
   @@configuration = Configuration
 
-  def self.setup
+  def self.configure
     yield @@configuration
   end
+  singleton_class.send(:alias_method, :setup, :configure)
 end

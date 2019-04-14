@@ -1,7 +1,7 @@
 module Navigasmic::Builder
-  autoload :ListBuilder,  'navigasmic/builders/list_builder'
-  autoload :MapBuilder,   'navigasmic/builders/map_builder'
-  autoload :CrumbBuilder, 'navigasmic/builders/crumb_builder'
+  autoload :ListBuilder,  "navigasmic/builders/list_builder"
+  autoload :MapBuilder,   "navigasmic/builders/map_builder"
+  autoload :CrumbBuilder, "navigasmic/builders/crumb_builder"
 
   class Base
     class Configuration
@@ -62,7 +62,7 @@ module Navigasmic::Builder
       remove_excluded_options(options)
       options.inject({}) do |hash, (key, value)|
         if value.is_a?(Array)
-          value = value.map{ |v| v.is_a?(Proc) ? eval_in_context(&v) : v }
+          value = value.map { |v| v.is_a?(Proc) ? eval_in_context(&v) : v }
         elsif value.is_a?(Proc)
           value = eval_in_context(&value)
         end
@@ -88,9 +88,9 @@ module Navigasmic::Builder
       if args.length == 1
         args.delete_at(0)
       else
-        hash = {controller: options.delete(:controller), action: options.delete(:action)}
+        hash = { controller: options.delete(:controller), action: options.delete(:action) }
         hash = options.delete(:link) || hash
-        hash.select{ |key, value| value.present? }
+        hash.select { |key, value| value.present? }
       end
     end
 
@@ -108,6 +108,5 @@ module Navigasmic::Builder
         url_for(link)
       end
     end
-
   end
 end

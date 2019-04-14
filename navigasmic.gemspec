@@ -1,26 +1,22 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
+
 $:.push File.expand_path("../lib", __FILE__)
-require 'navigasmic/version'
 
+# Maintain your gem's version:
+require "navigasmic/version"
+
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-
-  # General Gem Information
-  s.name        = 'navigasmic'
+  s.name        = "navigasmic"
   s.version     = Navigasmic::VERSION
-  s.authors     = ['Jeremy Jackson']
-  s.email       = ['jejacks0n@gmail.com']
-  s.homepage    = 'http://github.com/jejacks0n/navigasmic'
-  s.summary     = %Q{Navigasmic: Semantic navigation for Rails}
-  s.description = %Q{Use semantic structures to to build beautifully simple navigation structures in Rails}
-  s.licenses    = ['MIT']
+  s.authors     = ["jejacks0n"]
+  s.email       = ["jejacks0n@gmail.com"]
+  s.homepage    = "http://github.com/jejacks0n/navigasmic"
+  s.summary     = "Navigasmic: Semantic navigation for Rails"
+  s.description = "Use semantic structures to to build beautifully simple navigation structures in Rails"
+  s.license     = "MIT"
 
-  # Gem Files
-  s.extra_rdoc_files  = %w(LICENSE)
-  # = MANIFEST =
-  s.files             = Dir['lib/**/*']
-  s.test_files        = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables       = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  # = MANIFEST =
-  s.require_paths     = %w(lib)
+  s.required_ruby_version = "~> 2.4"
 
+  s.files = Dir["{lib}/**/*"] + ["MIT.LICENSE", "README.md"]
 end

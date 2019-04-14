@@ -1,5 +1,4 @@
 module Navigasmic::ViewHelpers
-
   # Semantic navigation view helper method
   #
   # Example Usage:
@@ -18,5 +17,4 @@ module Navigasmic::ViewHelpers
     builder = options.delete(:builder) || Navigasmic.configuration.default_builder
     builder.new(self, name, options, &block).render
   end
-
 end

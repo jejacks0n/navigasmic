@@ -3,4 +3,3 @@ Congratulations! Navigasmic was successfully installed. Documentation and more
 can be found at: https://github.com/jejacks0n/navigasmic
 
 You should start defining some navigation in config/initializers/navigasmic.rb
-

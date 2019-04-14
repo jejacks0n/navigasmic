@@ -1,7 +1,6 @@
 module Navigasmic::Builder
   class CrumbBuilder < Base
     class Configuration < Base::Configuration
-
       attr_accessor :item_class
       attr_accessor :link_generator, :label_generator
 
@@ -13,8 +12,8 @@ module Navigasmic::Builder
         @item_class = nil
 
         # generator callbacks
-        @link_generator = proc{ |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }
-        @label_generator = proc{ |label, is_linked, is_nested| "<span>#{label}</span>" }
+        @link_generator = proc { |label, link, options, is_nested| link_to(label, link, options.delete(:link_html)) }
+        @label_generator = proc { |label, is_linked, is_nested| "<span>#{label}</span>" }
 
         super
       end
@@ -28,7 +27,7 @@ module Navigasmic::Builder
 
     def render
       capture(&@definition)
-      @path.join(' ').html_safe
+      @path.join(" ").html_safe
     end
 
     def group(label = nil, options = {}, &block)
@@ -41,7 +40,7 @@ module Navigasmic::Builder
     def item(label, *args, &block)
       options = args.extract_options!
       options = flatten_and_eval_options(options)
-      return '' unless visible?(options)
+      return "" unless visible?(options)
 
       merge_classes!(options, @config.item_class)
       item = Navigasmic::Item.new(label, extract_and_determine_link(label, options, *args), visible?(options), options)
@@ -60,18 +59,17 @@ module Navigasmic::Builder
 
     private
 
-    def label_for(label, link, is_nested = false, options = {})
-      if label.present?
-        label = @context.instance_exec(label, options, !!link, is_nested, &@config.label_generator).html_safe
+      def label_for(label, link, is_nested = false, options = {})
+        if label.present?
+          label = @context.instance_exec(label, options, !!link, is_nested, &@config.label_generator).html_safe
+        end
+        label = @context.instance_exec(label, link, options.delete(:link_html) || {}, is_nested, &@config.link_generator).html_safe if link
+        label
       end
-      label = @context.instance_exec(label, link, options.delete(:link_html) || {}, is_nested, &@config.link_generator).html_safe if link
-      label
-    end
 
-    def merge_classes!(hash, classname)
-      return if classname.blank?
-      hash[:class] = (hash[:class] ? "#{hash[:class]} " : '') << classname
-    end
-
+      def merge_classes!(hash, classname)
+        return if classname.blank?
+        hash[:class] = (hash[:class] ? "#{hash[:class]} " : "") << classname
+      end
   end
 end

@@ -1,5 +1,4 @@
 class Navigasmic::Item
-
   attr_accessor :link
   def initialize(label, link, visible, options = {})
     @label, @link, @visible = label, link, visible
@@ -36,28 +35,28 @@ class Navigasmic::Item
         false
       when Hash
         rule.except(*unwanted_keys).detect do |key, value|
-          value = value.gsub(/^\//, '') if key == :controller
+          value = value.gsub(/^\//, "") if key == :controller
           value == params[key].to_s
         end
       else
-        raise ArgumentError, 'Highlighting rules should be an array containing any of/or a Boolean, String, Regexp, Hash or Proc'
+        raise ArgumentError, "Highlighting rules should be an array containing any of/or a Boolean, String, Regexp, Hash or Proc"
       end
     end
   end
 
   private
 
-  def calculate_highlighting_rules(rules)
-    [].tap do |highlighting_rules|
-      if rules.nil?
-        highlighting_rules << @link if link?
-      else
-        highlighting_rules.concat Array(rules)
+    def calculate_highlighting_rules(rules)
+      [].tap do |highlighting_rules|
+        if rules.nil?
+          highlighting_rules << @link if link?
+        else
+          highlighting_rules.concat Array(rules)
+        end
       end
     end
-  end
 
-  def unwanted_keys
-    [:only_path, :use_routes]
-  end
+    def unwanted_keys
+      [:only_path, :use_routes]
+    end
 end
