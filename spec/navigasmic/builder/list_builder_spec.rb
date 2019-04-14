@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Navigasmic::Builder::ListBuilder", type: :helper do
+describe Navigasmic::Builder::ListBuilder, type: :helper do
   subject { Navigasmic::Builder::ListBuilder }
 
   def clean(string)

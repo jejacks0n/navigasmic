@@ -63,13 +63,13 @@ instance), and the second is via a global configuration similar to how
 ### Defining Navigation in Initializer
 ```ruby
 config.semantic_navigation :primary do |n|
-  n.group 'Blog', class: 'blog' do
-    n.item 'Articles', controller: '/blog/posts'
-    n.item 'Links', controller: '/blog/links'
+  n.group "Blog", class: "blog" do
+    n.item "Articles", controller: "/blog/posts"
+    n.item "Links", controller: "/blog/links"
   end
-  n.group 'Info' do
-    n.item 'Me', '/about', title: 'The Awesomeness That Is'
-    n.item 'My Portfolio'
+  n.group "Info" do
+    n.item "Me", "/about", title: "The Awesomeness That Is"
+    n.item "My Portfolio"
   end
 end
 ```
@@ -91,7 +91,7 @@ passing it a block you're able to define the navigation structure easily and qui
 
 ```erb
 <%= semantic_navigation :primary, builder: Navigasmic::Builder::ListBuilder, class: "my-navigation" do |n| %>
-  <% n.group "Blog", class: 'blog' do %>
+  <% n.group "Blog", class: "blog" do %>
     <li>Custom Node</li>
     <% n.item "Articles", controller: "/blog/posts" %>
     <% n.item "Links", controller: "/blog/links" %>
@@ -163,8 +163,8 @@ Note that we're passing a string for the posts id. That's because when the param
 link options you provided, the types need to match.
 
 If you don't provide a link, Navigasmic attempts to find a path helper from the label. In the following example we only
-provide the label, but if I've defined a route (E.g. `match '/portfolio' => 'portfolio#index', as: 'my_portfolio'`) it
-will automatically use the `my_porfolio_path' path helper.
+provide the label, but if I've defined a route (E.g. `match "/portfolio" => "portfolio#index", as: "my_portfolio"`) it
+will automatically use the `my_porfolio_path` path helper.
 
 ```ruby
 n.item "My Portfolio" # Yeah auto link!
@@ -175,7 +175,7 @@ Highlight rules allows for passing an array containing any of/or a Boolean, Stri
 examples will highlight:
 
 ```ruby
-n.item "On the /my_thoughts path, and on Mondays", '/blog/posts', highlights_on: ["/my_thoughts", proc { Time.now.wday == 1}]
+n.item "On the /my_thoughts path, and on Mondays", "/blog/posts", highlights_on: ["/my_thoughts", proc { Time.now.wday == 1}]
 n.item "On any action in BlogController", highlights_on: [{ controller: "blog" }]
 n.item "On any path beginning with 'my_'", highlights_on: /^\/my_/
 n.item "Only on '/my_thoughts'", highlights_on: "/my_thoughts"
@@ -230,28 +230,28 @@ that's pretty easy to style and work with.
     Default: `:li`
   - `wrapper_class` -
     *String*: The classname that will be applied to the top level element.
-    Default: `'semantic-navigation'`
+    Default: `"semantic-navigation"`
   - `item_class` -
     *String*: The classname that will be applied to any item by default.
     Default: `nil`
   - `has_nested_class` -
     *String*: The classname that will be applied to any group (or item with nested items).
-    Default: `'with-group'`
+    Default: `"with-group"`
   - `is_nested_class` -
     *String*: The classname that will be applied to any nested items (within a group or item).
-    Default: `'with-group'`
+    Default: `"with-group"`
   - `disabled_class` -
     *String*: The classname that will be applied to disabled items.
-    Default: `'disabled'`
+    Default: `"disabled"`
   - `highlighted_class` -
     *String*: The classname that will be applied to items that should be highlighted.
-    Default: `'active'`
+    Default: `"active"`
   - `label_generator` -
     *Proc*: Called when inserting labels into items or groups.
-    Default: `proc{ |label, options, has_link, has_nested| "<span>#{label}</span>" }`
+    Default: `proc { |label, options, has_link, has_nested| "<span>#{label}</span>" }`
   - `link_generator` -
     *Proc*: Called when generating links.
-    Default: `proc{ |label, link, link_options, is_nested| link_to(label, link, options.delete(:link_html)) }`
+    Default: `proc { |label, link, link_options, is_nested| link_to(label, link, options.delete(:link_html)) }`
 
 ### MapBuilder Options
 The MapBuilder is used for generate XML sitemaps that follow the protocol laid out by the [Sitemaps XML format](http://www.sitemaps.org/protocol.html).

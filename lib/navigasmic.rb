@@ -1,5 +1,7 @@
 require "navigasmic/version"
-require "navigasmic/rails"
-require "navigasmic/core/builder"
-require "navigasmic/core/configuration"
-require "navigasmic/core/item"
+require "navigasmic/item"
+require "navigasmic/builder/base"
+require "navigasmic/configuration"
+
+require "navigasmic/engine"
+require "navigasmic/view_helpers"
