@@ -12,17 +12,7 @@ load "rails/tasks/engine.rake"
 Bundler::GemHelper.install_tasks
 
 # load in rspec tasks
-# task "db:test:prepare" => "app:db:test:prepare"
 load "rspec/rails/tasks/rspec.rake"
-
-# namespace :spec do
-#   [:engine].each do |sub|
-#     desc "Run the code examples in spec/#{sub}"
-#     RSpec::Core::RakeTask.new(sub => "db:test:prepare") do |t|
-#       t.pattern = "./spec/#{sub}/**/*_spec.rb"
-#     end
-#   end
-# end
 
 # setup the default task
 Rake::Task["default"].prerequisites.clear
