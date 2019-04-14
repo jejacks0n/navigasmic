@@ -9,7 +9,7 @@ module Navigasmic
         copy_file "templates/initializer.rb", "config/initializers/navigasmic.rb"
       end
 
-      def display_readme
+      def display_post_install
         readme "POST_INSTALL" if behavior == :invoke
       end
     end
