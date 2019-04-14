@@ -12,11 +12,10 @@ Gem::Specification.new do |s|
   s.authors     = ["jejacks0n"]
   s.email       = ["jejacks0n@gmail.com"]
   s.homepage    = "http://github.com/jejacks0n/navigasmic"
-  s.summary     = "Navigasmic: Semantic navigation for Rails"
-  s.description = "Use semantic structures to to build beautifully simple navigation structures in Rails"
+  s.summary     = "Navigasmic: Semantic navigation for Rails defined in view or configuration"
+  s.description = "Use semantic structures to to build beautifully simple navigation structures in Rails."
   s.license     = "MIT"
+  s.files       = Dir["{lib}/**/*"] + ["MIT.LICENSE", "README.md"]
 
   s.required_ruby_version = "~> 2.4"
-
-  s.files = Dir["{lib}/**/*"] + ["MIT.LICENSE", "README.md"]
 end
