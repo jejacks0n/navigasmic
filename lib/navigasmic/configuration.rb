@@ -1,17 +1,18 @@
-require 'singleton'
+require "singleton"
 
 module Navigasmic
   class Configuration
     include Singleton
 
-    cattr_accessor :default_builder
+    cattr_accessor(*[
+      :default_builder,
+      :definitions,
+      :builder_configurations,
+    ])
+
     @@default_builder = Navigasmic::Builder::ListBuilder
-
-    cattr_accessor :builder_configurations
-    @@builder_configurations = {}
-
-    cattr_accessor :definitions
     @@definitions = {}
+    @@builder_configurations = {}
 
     def self.semantic_navigation(name, &block)
       @@definitions[name] = block
@@ -32,7 +33,9 @@ module Navigasmic
   mattr_accessor :configuration
   @@configuration = Configuration
 
-  def self.setup
+  def self.configure
     yield @@configuration
   end
+
+  singleton_class.send(:alias_method, :setup, :configure)
 end

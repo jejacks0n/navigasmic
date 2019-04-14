@@ -1,0 +1,16 @@
+inherit_gem:
+  rubocop-rails_config:
+    - config/rails.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/DefEndAlignment:
+  EnforcedStyleAlignWith: def
+
+AllCops:
+  TargetRubyVersion: 2.6.2
