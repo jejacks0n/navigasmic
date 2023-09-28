@@ -34,3 +34,15 @@ appraise "rails-5-2" do
   # https://github.com/flavorjones/loofah/pull/267
   gem "loofah", "<= 2.20.0"
 end
+
+appraise "rails-6-0" do
+  gem "rails", "~> 6.0.0"
+end
+
+appraise "rails-6-1" do
+  gem "rails", "~> 6.1.0"
+end
+
+appraise "rails-7-0" do
+  gem "rails", "~> 7.0.0"
+end
