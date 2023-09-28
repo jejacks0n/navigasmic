@@ -2,10 +2,14 @@
 
 source "https://rubygems.org"
 
-gem "rails", "~> 6.1.0"
-gem "rspec-rails"
-gem "simplecov"
 gem "rubocop", require: false
 gem "rubocop-rails_config"
+gem "rails", "~> 6.1.0"
+
+group :test do
+  gem "rspec-rails"
+  gem "simplecov"
+  gem "simplecov_json_formatter"
+end
 
 gemspec path: "../"
