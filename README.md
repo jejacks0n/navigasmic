@@ -156,7 +156,7 @@ posts (they will also only highlight on the given record):
 
 ```ruby
 n.item "Article", controller: "/blog/posts", action: "show", id: "42"
-n.item "Article", class: "featured", link: {controller: "/blog/posts", action: "show", id: "42"}
+n.item "Article", class: "featured", link: { controller: "/blog/posts", action: "show", id: "42" }
 ```
 
 Note that we're passing a string for the posts id. That's because when the param comes in and is compared against the
@@ -175,7 +175,7 @@ Highlight rules allows for passing an array containing any of/or a Boolean, Stri
 examples will highlight:
 
 ```ruby
-n.item "On the /my_thoughts path, and on Mondays", "/blog/posts", highlights_on: ["/my_thoughts", proc { Time.now.wday == 1}]
+n.item "On the /my_thoughts path, and on Mondays", "/blog/posts", highlights_on: ["/my_thoughts", proc { Time.now.wday == 1 }]
 n.item "On any action in BlogController", highlights_on: [{ controller: "blog" }]
 n.item "On any path beginning with 'my_'", highlights_on: /^\/my_/
 n.item "Only on '/my_thoughts'", highlights_on: "/my_thoughts"

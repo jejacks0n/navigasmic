@@ -3,7 +3,7 @@ SimpleCov.start("rails") do
   add_filter "lib/navigasmic/version.rb"
 end
 
-require 'bundler'
+require "bundler"
 
 Bundler.require :default, :development
 

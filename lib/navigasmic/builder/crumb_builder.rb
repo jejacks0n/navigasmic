@@ -59,7 +59,6 @@ module Navigasmic
       end
 
       private
-
         def label_for(label, link, is_nested = false, options = {})
           if label.present?
             label = @context.instance_exec(label, options, !!link, is_nested, &@config.label_generator).html_safe

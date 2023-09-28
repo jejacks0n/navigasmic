@@ -47,7 +47,6 @@ module Navigasmic
     end
 
     private
-
       def calculate_highlighting_rules(rules)
         [].tap do |highlighting_rules|
           if rules.nil?
