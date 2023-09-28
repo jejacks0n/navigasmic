@@ -2,7 +2,6 @@ Navigasmic
 ==========
 
 [![Gem Version](https://img.shields.io/gem/v/navigasmic.svg)](https://rubygems.org/gems/navigasmic)
-[![Build Status](https://img.shields.io/travis/jejacks0n/navigasmic.svg)](https://travis-ci.org/jejacks0n/navigasmic)
 [![Maintainability](https://api.codeclimate.com/v1/badges/53eb8e1e49cc1e19dde7/maintainability)](https://codeclimate.com/github/jejacks0n/navigasmic/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/53eb8e1e49cc1e19dde7/test_coverage)](https://codeclimate.com/github/jejacks0n/navigasmic/test_coverage)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
