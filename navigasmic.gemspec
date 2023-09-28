@@ -17,5 +17,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.files       = Dir["{lib}/**/*"] + ["MIT.LICENSE", "README.md"]
 
-  s.required_ruby_version = "~> 2.4"
+  s.add_development_dependency "appraisal"
+
+  s.required_ruby_version = ">= 2.4"
 end
