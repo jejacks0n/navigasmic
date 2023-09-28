@@ -6,6 +6,7 @@ gemspec
 # test dependencies
 gem "rspec-rails"
 gem "simplecov"
+gem "simplecov_json_formatter"
 
 # services
 gem "rubocop", require: false

@@ -71,6 +71,12 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
 
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage/coverage.json
+
   rubocop:
     runs-on: ubuntu-latest
     steps:
@@ -84,3 +90,22 @@ jobs:
 
       - name: Run Rubocop
         run: bundle exec rubocop
+
+  upload-coverage:
+    needs: tests
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'jejacks0n/navigasmic' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download code coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage-report
+
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageLocations: ${{github.workspace}}/coverage.json:simplecov
