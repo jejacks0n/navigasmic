@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.files       = Dir["{lib}/**/*"] + ["MIT.LICENSE", "README.md"]
 
   s.add_development_dependency "appraisal"
+  s.add_development_dependency "combustion", '~> 1.3'
+  s.add_development_dependency "sqlite3"
 
   s.required_ruby_version = ">= 2.4"
 end

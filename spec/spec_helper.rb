@@ -1,12 +1,14 @@
-ENV["RAILS_ENV"] ||= "test"
-ENV["RAILS_ROOT"] = File.expand_path("../dummy", __FILE__)
-
 require "simplecov"
 SimpleCov.start("rails") do
   add_filter "lib/navigasmic/version.rb"
 end
 
-require_relative "dummy/config/environment"
+require 'bundler'
+
+Bundler.require :default, :development
+
+Combustion.initialize! :action_controller, :action_view
+
 require "rspec/rails"
 require "navigasmic"
 
