@@ -73,7 +73,6 @@ module Navigasmic
       end
 
       private
-
         def structure_for(label, link = false, options = {}, &block)
           label = label_for(label, link, block_given?, options)
 

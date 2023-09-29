@@ -2,7 +2,7 @@ Navigasmic
 ==========
 
 [![Gem Version](https://img.shields.io/gem/v/navigasmic.svg)](https://rubygems.org/gems/navigasmic)
-[![Build Status](https://img.shields.io/travis/jejacks0n/navigasmic.svg)](https://travis-ci.org/jejacks0n/navigasmic)
+![Build Status](https://github.com/jejacks0n/navigasmic/actions/workflows/ci.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/53eb8e1e49cc1e19dde7/maintainability)](https://codeclimate.com/github/jejacks0n/navigasmic/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/53eb8e1e49cc1e19dde7/test_coverage)](https://codeclimate.com/github/jejacks0n/navigasmic/test_coverage)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
@@ -156,7 +156,7 @@ posts (they will also only highlight on the given record):
 
 ```ruby
 n.item "Article", controller: "/blog/posts", action: "show", id: "42"
-n.item "Article", class: "featured", link: {controller: "/blog/posts", action: "show", id: "42"}
+n.item "Article", class: "featured", link: { controller: "/blog/posts", action: "show", id: "42" }
 ```
 
 Note that we're passing a string for the posts id. That's because when the param comes in and is compared against the
@@ -175,7 +175,7 @@ Highlight rules allows for passing an array containing any of/or a Boolean, Stri
 examples will highlight:
 
 ```ruby
-n.item "On the /my_thoughts path, and on Mondays", "/blog/posts", highlights_on: ["/my_thoughts", proc { Time.now.wday == 1}]
+n.item "On the /my_thoughts path, and on Mondays", "/blog/posts", highlights_on: ["/my_thoughts", proc { Time.now.wday == 1 }]
 n.item "On any action in BlogController", highlights_on: [{ controller: "blog" }]
 n.item "On any path beginning with 'my_'", highlights_on: /^\/my_/
 n.item "Only on '/my_thoughts'", highlights_on: "/my_thoughts"

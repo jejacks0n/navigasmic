@@ -3,11 +3,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
-gem "rails"
-
 # test dependencies
-gem "rspec-rails"
-gem "simplecov"
+group :test do
+  gem "rspec-rails"
+  gem "simplecov"
+  gem "simplecov_json_formatter"
+end
 
 # services
 gem "rubocop", require: false

@@ -36,7 +36,6 @@ module Navigasmic
       end
 
       private
-
         def configuration_or_default(config = nil)
           configurations = Navigasmic.configuration.builder_configurations[self.class.to_s]
           proc = configurations.present? ? configurations[config || :default] : nil

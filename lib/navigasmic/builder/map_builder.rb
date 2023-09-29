@@ -61,7 +61,6 @@ module Navigasmic
       end
 
       private
-
         def structure_for(label, link, options, &block)
           content = content_tag(:loc, link_for(link, options))
           content << content_tag(:name, label)

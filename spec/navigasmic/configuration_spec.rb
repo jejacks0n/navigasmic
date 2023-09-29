@@ -31,7 +31,7 @@ describe Navigasmic::Configuration do
   end
 
   describe ".sementic_navigation" do
-    let(:block) { proc {} }
+    let(:block) { proc { } }
 
     it "adds it to the definitions" do
       subject.semantic_navigation(:foo, &block)
@@ -40,7 +40,7 @@ describe Navigasmic::Configuration do
   end
 
   describe ".builder" do
-    let(:block) { proc {} }
+    let(:block) { proc { } }
 
     it "adds it to the builder configurations" do
       subject.builder(:foo, &block)

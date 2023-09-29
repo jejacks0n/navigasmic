@@ -4,3 +4,5 @@ coverage
 spec/dummy/log/*.log
 spec/dummy/tmp/
 Gemfile.lock
+*.gemfile.lock
+*.sqlite

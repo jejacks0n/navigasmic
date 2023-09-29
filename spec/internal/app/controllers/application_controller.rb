@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   def show; end
 
   private
-
     def logged_in?
       true
     end
